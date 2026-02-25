@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: enigma_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: enigma_db
+      POSTGRES_USER: enigma_user
+      POSTGRES_PASSWORD: enigma_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U enigma_user -d enigma_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: enigma_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://enigma_user:enigma_password@postgres:5432/enigma_db
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      IMAP_HOST: ${IMAP_HOST}
+      IMAP_USER: ${IMAP_USER}
+      IMAP_PASSWORD: ${IMAP_PASSWORD}
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+    command: uvicorn main:app --host 0.0.0.0 --port 5000 --reload
+
+  frontend:
+    build: ./frontend
+    container_name: enigma_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:5000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+volumes:
+  postgres_data:
+    name: enigma_postgres_data
