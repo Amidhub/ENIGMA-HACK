@@ -1,15 +1,16 @@
+import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
 import { useState } from "react";
 
 const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
-  const [editedAnswer, setEditedAnswer] = useState<string>(() => {
-    return item?.llmAnswer ?? ''; 
+  const [editedAnswer, setEditedAnswer] = useState<CellTableProps>(() => {
+    return item ?? ''; 
   })
   
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (OnClick && item?.id) {
-      OnClick(item.id, editedAnswer);
+      // OnClick(item.id, editedAnswer);
     }
   }
 
@@ -21,8 +22,8 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
           id="input-edit"
           rows={5}
           className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
-          value={editedAnswer}
-          onChange={(e) => setEditedAnswer(e.target.value)}
+          // value={editedAnswer}
+          // onChange={(e) => setEditedAnswer(e.target.value)}
         />        
       </div>
        <div className="flex justify-center">

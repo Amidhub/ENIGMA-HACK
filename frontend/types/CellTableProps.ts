@@ -1,6 +1,12 @@
 export default interface CellTableProps {
-  id: number;
+  id?: number;
+  date: string;
+  fullName: string;
+  enterprise: string;
+  phoneNumber: string;
+  factoryNumbers: string;
+  typeDevices: string;
   email: string;
-  question: string;
-  llmAnswer: string;
+  emotionalСolor: 'positive' | 'negative' | 'neutral';
+  essenceMatter: string;
 }
