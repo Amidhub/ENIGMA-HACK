@@ -1,17 +1,16 @@
 import UserAuthProps from "../types/UserAuthProps";
 
 const loginUser = async ({userLogin, userPassword, isRemember}: UserAuthProps) => {
-  const SERVER_URL_API = process.env.SERVER_URL_API;
+  const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  const response = await fetch(`${SERVER_URL_API}/api/login`, {
+  const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/login`, {
     method: 'POST',
     headers:{'Content-Type': 'application/json'},
     credentials: 'include',
     body: JSON.stringify({userLogin, userPassword, isRemember})
   })
   
-  const serverResponse = await response.json();
-  return serverResponse;
+  return await response.json();
 }
 
 export default loginUser;

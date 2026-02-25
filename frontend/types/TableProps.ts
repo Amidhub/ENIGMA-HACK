@@ -4,5 +4,6 @@ export default interface TableProps {
   items: CellTableProps[];
   setItems?: React.Dispatch<React.SetStateAction<CellTableProps[]>>;
   setShowWidgetEdit: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentCell: React.Dispatch<React.SetStateAction<CellTableProps | null>> ;
+  setShowWidgetSend: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentCell: React.Dispatch<React.SetStateAction<CellTableProps>> ;
 }

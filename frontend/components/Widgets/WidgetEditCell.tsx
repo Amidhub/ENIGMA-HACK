@@ -1,20 +1,15 @@
-import WidgetEditCellProps from "@/types/WidgetEditCellProps";
+import WidgetCellProps from "@/types/WidgetCellProps";
 import { useState } from "react";
 
-const WidgetEditCell = ({ item, onSave }: WidgetEditCellProps )=> {
-  console.log(item);
-  
+const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
   const [editedAnswer, setEditedAnswer] = useState<string>(() => {
-    if (item) {
-      return item.llmAnswer
-    }
-    return '';
-  })  
+    return item?.llmAnswer ?? ''; 
+  })
   
-  const handleEditSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (item?.llmAnswer) {
-      onSave(item.id, editedAnswer);
+    if (OnClick && item?.id) {
+      OnClick(item.id, editedAnswer);
     }
   }
 
@@ -22,9 +17,9 @@ const WidgetEditCell = ({ item, onSave }: WidgetEditCellProps )=> {
     <form className="flex flex-col p-10 gap-10" onSubmit={handleEditSubmit}>
       <div className="flex flex-col gap-1 w-full">
         <label htmlFor="input-edit">Ответ</label>
-        <input 
-          type="text"
+        <textarea 
           id="input-edit"
+          rows={5}
           className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
           value={editedAnswer}
           onChange={(e) => setEditedAnswer(e.target.value)}

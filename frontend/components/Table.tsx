@@ -1,10 +1,14 @@
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
 
-export default function Table({ items, setShowWidgetEdit, setCurrentCell }: TableProps) {
-  const handleCurrentCell = (item: CellTableProps) => {
+export default function Table({ items, setShowWidgetEdit, setShowWidgetSend, setCurrentCell }: TableProps) {
+  const handleCurrentCellEdit = (item: CellTableProps, type: 'send' | 'edit') => {
     setCurrentCell(item)
-    setShowWidgetEdit(true)
+    if (type === 'send') {
+      setShowWidgetSend(true);
+      return;
+    }
+    setShowWidgetEdit(true);
   }
 
   return (
@@ -29,10 +33,10 @@ export default function Table({ items, setShowWidgetEdit, setCurrentCell }: Tabl
               <td className="p-3 border-b border-[#BFD8BD] max-w-md wrap-break-words">{item.llmAnswer}</td>
               <td className="p-3 border-b border-[#BFD8BD]">
                 <div className="flex gap-2">
-                  <button className="bg-[#77BFA3] text-white px-3 py-1 rounded-md hover:bg-[#98C9A3]">
+                  <button type="button" className="bg-[#77BFA3] text-white px-3 py-1 rounded-md cursor-pointer hover:bg-[#98C9A3]"  onClick={() => handleCurrentCellEdit(item, 'send')}>
                     ✓
                   </button>
-                  <button className="bg-[#BFD8BD] text-gray-700 px-3 py-1 rounded-md hover:bg-[#DDE7C7]" onClick={() => handleCurrentCell(item)}>
+                  <button type="button" className="bg-[#BFD8BD] text-gray-700 px-3 py-1 rounded-md cursor-pointer hover:bg-[#DDE7C7]" onClick={() => handleCurrentCellEdit(item, 'edit')}>
                     ✎
                   </button>
                 </div>
