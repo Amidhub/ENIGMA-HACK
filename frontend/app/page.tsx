@@ -59,16 +59,14 @@ const defaultItems: CellTableProps[] = [
     essenceMatter: 'Ошибка при оплате'
   }
 ];
-  const [items, setItems] = useState<CellTableProps[]>(defaultItems); //СДЕЛАТЬ ХУК useHome или назвать как нибудь
+  const [items, setItems] = useState<CellTableProps[]>(defaultItems);
 
   useEffect(() => {
     const saved = localStorage.getItem('items');
     if (saved) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setItems(JSON.parse(saved));
     }
   }, []);
-
 
   const [showWidgetEdit, setShowWidgetEdit] = useState<boolean>(false);
   const [showWidgetSend, setShowWidgetSend] = useState<boolean>(false);
@@ -79,27 +77,24 @@ const defaultItems: CellTableProps[] = [
 
   useEffect(() => { 
     localStorage.setItem('items', JSON.stringify(items));
-  }, [items]);// localStorage для тестов
+  }, [items]);
 
   const handleSaveEditedAnswer = (id: number, editedAnswer: string) => {
     setItems(prev => prev.map(item => item.id === id ? {...item, llmAnswer: editedAnswer} : item));
-    alert('Ответ успешно изменен') //ПОМЕНЯТЬ НА КАСТОМНЫЕ УВЕДОМЛЕНИЯ
+    alert('Ответ успешно изменен')
     setShowWidgetEdit(false)
   }
 
-  
   const handleSendAnswer = async () => {
     try {
       const data = await sendAnswer(currentCell);
       if (!data.success) {
-        
+        // обработка ошибки
       }
-
       setShowWidgetSend(false);
     } catch (error) {
       console.error(error); 
     }
-    
   }
 
   const createTicket = (item: CellTableProps) => {
@@ -120,37 +115,45 @@ const defaultItems: CellTableProps[] = [
       <div className="flex flex-col gap-2 w-full">
         <div className="flex justify-end gap-5">
           <button 
-            className="border-2 rounded-2xl p-2 pr-3 pl-3 bg-[#77BFA3] cursor-pointer hover:bg-[#98C9A3] transition-all duration-300" 
+            className="border-2 rounded-2xl p-2 pr-3 pl-3 bg-[#D5BDAF] text-white cursor-pointer hover:bg-[#F5EBE0] hover:text-[#1A1A1A] transition-all duration-300" 
             type="button"
             onClick={() => setShowWidgetCreate(true)}
-          > Создать запись
+          >
+            Создать запись
           </button>
-          <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetExport ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetExport(false)}>
-            <div className="bg-[#EDEEC9] border border-[#BFD8BD] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-              <WidgetExportFile 
-                key={currentCell.id} 
-                items={items}
-                OnClick={() => setShowWidgetExport(false)}
-              />
-            </div>
-          </div>
-            <button 
-              className="animate-button border-2 rounded-full p-5 w-10 h-10 flex justify-center items-center border-[#77BFA3] text-green-500 cursor-pointer hover:bg-[#98C9A3] transition-colors duration-300 ease-in-out" 
-              onClick={() => setShowWidgetExport(true)}
-            >
-              ⤓ 
+          
+          <button 
+            className="border-2 rounded-full p-5 w-10 h-10 flex justify-center items-center border-[#D5BDAF] text-[#1A1A1A] cursor-pointer hover:bg-[#F5EBE0] transition-colors duration-300 ease-in-out" 
+            onClick={() => setShowWidgetExport(true)}
+          >
+            ⤓ 
           </button>
         </div>
-         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetCreate ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetCreate(false)}>
-          <div className="bg-[#EDEEC9] border border-[#BFD8BD] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+
+        {/* Export Modal */}
+        <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetExport ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetExport(false)}>
+          <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
+            <WidgetExportFile 
+              key={currentCell.id} 
+              items={items}
+              OnClick={() => setShowWidgetExport(false)}
+            />
+          </div>
+        </div>
+
+        {/* Create Modal */}
+        <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetCreate ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetCreate(false)}>
+          <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetCreateTicket 
               key={currentCell.id} 
               OnClick={createTicket}
             />
           </div>
         </div>
+
+        {/* Edit Modal */}
         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetEdit ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetEdit(false)}>
-          <div className="bg-[#EDEEC9] border border-[#BFD8BD] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetEditCell 
               key={currentCell.id} 
               item={currentCell} 
@@ -158,8 +161,10 @@ const defaultItems: CellTableProps[] = [
             />
           </div>
         </div>
+
+        {/* Send Modal */}
         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetSend ? 'opacity-100 visible' : 'opacity-0 invisible'}` } onClick={() => setShowWidgetSend(false)}>
-          <div className="bg-[#EDEEC9] border border-[#BFD8BD] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetSendCell 
               key={currentCell.id} 
               item={currentCell} 
@@ -167,6 +172,7 @@ const defaultItems: CellTableProps[] = [
             />
           </div>
         </div>
+
         <Table items={items} setShowWidgetEdit={setShowWidgetEdit} setShowWidgetSend={setShowWidgetSend} setCurrentCell={setCurrentCell}/>
       </div>
     </div>

@@ -12,9 +12,9 @@ export default function Table({ items, setShowWidgetEdit, setShowWidgetSend, set
   }
 
   return (
-    <div className="rounded-xl overflow-hidden border border-[#BFD8BD] shadow-sm">
+    <div className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm">
       <table className="w-full border-collapse">
-        <thead className="bg-[#77BFA3] text-white uppercase text-sm">
+        <thead className="bg-[#D5BDAF] text-white uppercase text-sm">
           <tr>
             <th className="p-3 text-left">Дата</th>
             <th className="p-3 text-left">ФИО</th>
@@ -29,23 +29,42 @@ export default function Table({ items, setShowWidgetEdit, setShowWidgetSend, set
           </tr>
         </thead>
         <tbody>
-          {items.map(( item ) => (
-            <tr key={item.id} className="animate-table">
-              <td className="p-3 border-b border-[#BFD8BD]">{new Date(item.date).toLocaleString()}</td>              
-              <td className="p-3 border-b border-[#BFD8BD] max-w-xs wrap-break-words">{item.fullName}</td>        
-              <td className="p-3 border-b border-[#BFD8BD]">{item.enterprise}</td>          
-              <td className="p-3 border-b border-[#BFD8BD] max-w-xs wrap-break-words">{item.phoneNumber}</td>    
-              <td className="p-3 border-b border-[#BFD8BD]">{item.factoryNumbers}</td>     
-              <td className="p-3 border-b border-[#BFD8BD] max-w-xs wrap-break-words">{item.typeDevices}</td>    
-              <td className="p-3 border-b border-[#BFD8BD]">{item.email}</td>        
-              <td className="p-3 border-b border-[#BFD8BD]">{item.emotionalСolor}</td>        
-              <td className="p-3 border-b border-[#BFD8BD] max-w-md wrap-break-words">{item.essenceMatter}</td>  
-              <td className="p-3 border-b border-[#BFD8BD]">                                
+          {items.map((item, index) => (
+            <tr 
+              key={item.id} 
+              className={index % 2 === 0 ? 'bg-[#F5EBE0]' : 'bg-white'}
+            >
+              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{new Date(item.date).toLocaleString()}</td>              
+              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words text-[#1A1A1A]">{item.fullName}</td>        
+              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{item.enterprise}</td>          
+              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words text-[#1A1A1A]">{item.phoneNumber}</td>    
+              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{item.factoryNumbers}</td>     
+              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words text-[#1A1A1A]">{item.typeDevices}</td>    
+              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{item.email}</td>        
+              <td className="p-3 border-b border-[#D5BDAF]">
+                <span className={
+                  item.emotionalСolor === 'positive' ? 'text-green-600 font-bold' :
+                  item.emotionalСolor === 'negative' ? 'text-red-600 font-bold' :
+                  'text-[#1A1A1A]'
+                }>
+                  {item.emotionalСolor}
+                </span>
+              </td>        
+              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-words text-[#1A1A1A]">{item.essenceMatter}</td>  
+              <td className="p-3 border-b border-[#D5BDAF]">                                
                 <div className="flex gap-2">
-                  <button type="button" className="bg-[#77BFA3] text-white px-3 py-1 rounded-md cursor-pointer hover:bg-[#98C9A3]" onClick={() => handleCurrentCellEdit(item, 'send')}>
+                  <button 
+                    type="button" 
+                    className="bg-[#D5BDAF] text-white px-3 py-1 rounded-md cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-colors" 
+                    onClick={() => handleCurrentCellEdit(item, 'send')}
+                  >
                     ✓
                   </button>
-                  <button type="button" className="bg-[#BFD8BD] text-gray-700 px-3 py-1 rounded-md cursor-pointer hover:bg-[#DDE7C7]" onClick={() => handleCurrentCellEdit(item, 'edit')}>
+                  <button 
+                    type="button" 
+                    className="bg-[#F5EBE0] text-[#1A1A1A] px-3 py-1 rounded-md cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-colors" 
+                    onClick={() => handleCurrentCellEdit(item, 'edit')}
+                  >
                     ✎
                   </button>
                 </div>
