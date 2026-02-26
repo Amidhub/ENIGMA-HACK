@@ -9,6 +9,7 @@ import WidgetCreateTicket from "@/components/Widgets/WidgetCreateTicket";
 import WidgetExportFile from "@/components/Widgets/WidgetExportFile";
 
 export default function Home() {
+  //ДЛЯ ТЕСТОВ
 const defaultItems: CellTableProps[] = [
   {
     id: 1,
@@ -100,10 +101,10 @@ const defaultItems: CellTableProps[] = [
   const createTicket = (item: CellTableProps) => {
     try {
      setItems(prev => {
-        const nextId = prev.length > 0 ? prev[prev.length - 1]!.id + 1 : 1;
+        const nextId = prev.length > 0 ? prev[prev.length - 1]!.id + 1 : 1; // исправить интерфейсом
         return [...prev, { ...item, id: nextId }];
       })
-      localStorage.setItem('items', JSON.stringify(items));
+      localStorage.setItem('items', JSON.stringify(items)); // ТЕСТ
       setShowWidgetCreate(false)
     } catch (error) {
       console.error(error);
@@ -130,7 +131,7 @@ const defaultItems: CellTableProps[] = [
           </button>
         </div>
 
-        {/* Export Modal */}
+        {/* Export Modal(в ветке взять компонент)  */}
         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetExport ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetExport(false)}>
           <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetExportFile 
@@ -141,7 +142,7 @@ const defaultItems: CellTableProps[] = [
           </div>
         </div>
 
-        {/* Create Modal */}
+        {/* Create Moda(в ветке взять компонент) l */}
         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetCreate ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetCreate(false)}>
           <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetCreateTicket 
@@ -151,7 +152,7 @@ const defaultItems: CellTableProps[] = [
           </div>
         </div>
 
-        {/* Edit Modal */}
+        {/* Edit Modal(в ветке взять компонент)  */}
         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetEdit ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetEdit(false)}>
           <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetEditCell 
@@ -162,7 +163,7 @@ const defaultItems: CellTableProps[] = [
           </div>
         </div>
 
-        {/* Send Modal */}
+        {/* Send Modal(в ветке взять компонент) */}
         <div className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out ${showWidgetSend ? 'opacity-100 visible' : 'opacity-0 invisible'}` } onClick={() => setShowWidgetSend(false)}>
           <div className="bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]" onClick={e => e.stopPropagation()}>
             <WidgetSendCell 

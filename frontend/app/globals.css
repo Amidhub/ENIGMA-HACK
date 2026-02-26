@@ -54,21 +54,3 @@ tbody tr:nth-child(odd) {
     transform: translateY(0);
   }
 }
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #F5EBE0;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #D5BDAF;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #EDEDE9;
-}
