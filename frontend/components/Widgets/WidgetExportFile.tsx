@@ -92,37 +92,36 @@ const WidgetExportFile = ({items, OnClick}: WidgetExportFileProps) => {
         <div className="flex justify-center gap-1 w-full">
           <input
             type="radio"
-            className="appearance-none w-4.5 h-4.5 border-2 border-[#98C9A3] rounded-full bg-[#DDE7C7] cursor-pointer transition duration-200 checked:shadow-[inset_0_0_0_3px_#BFD8BD] checked:border-[#77BFA3] checked:bg-[#77BFA3]"
+            className="appearance-none w-4.5 h-4.5 border-2 border-[#D5BDAF] rounded-full bg-[#F5EBE0] cursor-pointer transition duration-200 checked:shadow-[inset_0_0_0_3px_#EDEDE9] checked:border-[#D5BDAF] checked:bg-[#D5BDAF]"
             id="input-radio-csv"
             value="csv"  
             checked={radioVariant === 'csv'}
             onChange={() => setRadioVariant('csv')}
           /> 
-          <label htmlFor="input-radio-csv" className='-mt-0.5'>CSV</label>
+          <label htmlFor="input-radio-csv" className='-mt-0.5 text-[#1A1A1A]'>CSV</label>
         </div>
         <div className="flex justify-center gap-1 w-full">
           <input
             type="radio"
             id="input-radio-xlsx"
-            className="appearance-none w-4.5 h-4.5 border-2 border-[#98C9A3] rounded-full bg-[#DDE7C7] cursor-pointer transition duration-200 checked:shadow-[inset_0_0_0_3px_#BFD8BD] checked:border-[#77BFA3] checked:bg-[#77BFA3]"
+            className="appearance-none w-4.5 h-4.5 border-2 border-[#D5BDAF] rounded-full bg-[#F5EBE0] cursor-pointer transition duration-200 checked:shadow-[inset_0_0_0_3px_#EDEDE9] checked:border-[#D5BDAF] checked:bg-[#D5BDAF]"
             value="xlsx"   
             checked={radioVariant === 'xlsx'}
             onChange={() => setRadioVariant('xlsx')}
           /> 
-          <label htmlFor="input-radio-xlsx" className='-mt-0.5'>XLSX</label>
+          <label htmlFor="input-radio-xlsx" className='-mt-0.5 text-[#1A1A1A]'>XLSX</label>
         </div>
       </div>
-       <div className="flex justify-center">
+      <div className="flex justify-center">
         <button 
           type="submit" 
-          className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#98C9A3] transition-all duration-270 "
-          >
+          className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-all duration-270 bg-[#D5BDAF] text-white"
+        >
           Сохранить
         </button>
       </div>
     </form>
   );
 };
-
 
 export default WidgetExportFile;

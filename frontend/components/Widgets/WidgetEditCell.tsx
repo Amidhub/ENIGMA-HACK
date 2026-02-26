@@ -1,16 +1,13 @@
-import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
 import { useState } from "react";
 
 const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
-  const [editedAnswer, setEditedAnswer] = useState<CellTableProps>(() => {
-    return item ?? ''; 
-  })
+  const [editedAnswer, setEditedAnswer] = useState<string>(item?.essenceMatter);
   
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (OnClick && item?.id) {
-      // OnClick(item.id, editedAnswer);
+      OnClick(item.id, editedAnswer);
     }
   }
 
@@ -21,16 +18,16 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
         <textarea 
           id="input-edit"
           rows={5}
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
-          // value={editedAnswer}
-          // onChange={(e) => setEditedAnswer(e.target.value)}
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
+          value={editedAnswer}
+          onChange={(e) => setEditedAnswer(e.target.value)}
         />        
       </div>
-       <div className="flex justify-center">
+      <div className="flex justify-center">
         <button 
           type="submit" 
-          className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#98C9A3] transition-all duration-270 "
-          >
+          className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-all duration-270 bg-[#D5BDAF] text-white"
+        >
           Сохранить
         </button>
       </div>
@@ -39,4 +36,3 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
 };
 
 export default WidgetEditCell;
-

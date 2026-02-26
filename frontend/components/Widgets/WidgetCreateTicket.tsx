@@ -33,7 +33,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="datetime-local"
           id="date"
           name="date"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.date.slice(0, 16)}
           onChange={handleChange}
           required
@@ -46,7 +46,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="text"
           id="fullName"
           name="fullName"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.fullName}
           onChange={handleChange}
           required
@@ -59,7 +59,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="text"
           id="enterprise"
           name="enterprise"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.enterprise}
           onChange={handleChange}
           required
@@ -72,7 +72,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="tel"
           id="phoneNumber"
           name="phoneNumber"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.phoneNumber}
           onChange={handleChange}
           required
@@ -85,7 +85,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="text"
           id="factoryNumbers"
           name="factoryNumbers"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.factoryNumbers}
           onChange={handleChange}
           required
@@ -98,7 +98,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="text"
           id="typeDevices"
           name="typeDevices"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.typeDevices}
           onChange={handleChange}
           required
@@ -111,7 +111,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           type="email"
           id="email"
           name="email"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.email}
           onChange={handleChange}
           required
@@ -123,7 +123,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
         <select
           id="emotionalСolor"
           name="emotionalСolor"
-          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300"
+          className="border-2 rounded-lg p-2 w-full focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300"
           value={formData.emotionalСolor}
           onChange={handleChange}
           required
@@ -140,7 +140,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           id="essenceMatter"
           name="essenceMatter"
           rows={4}
-          className="border-2 rounded-lg p-2 w-full text-wrap-balance focus:outline-none focus:border-[#77BFA3] focus:transition-all duration-300" 
+          className="border-2 rounded-lg p-2 w-full text-wrap-balance focus:outline-none focus:border-[#D5BDAF] focus:transition-all duration-300" 
           value={formData.essenceMatter}
           onChange={handleChange}
           required
@@ -150,7 +150,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
       <div className="flex justify-center mt-5">
         <button 
           type="submit" 
-          className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#98C9A3] transition-all duration-270"
+          className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-all duration-270 bg-[#D5BDAF] text-white"
         >
           Создать запись
         </button>
