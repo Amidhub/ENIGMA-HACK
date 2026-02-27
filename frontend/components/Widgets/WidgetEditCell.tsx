@@ -1,19 +1,19 @@
-import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
 import { useState } from "react";
 
 const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
-  const [editedAnswer, setEditedAnswer] = useState<string>(() => {
-    return item.essenceMatter ?? ''; 
-  })
+  const [editedAnswer, setEditedAnswer] = useState<string>(item?.essenceMatter)
   
+  if (!item) {
+      return null; 
+  }
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (OnClick && item?.id) {
       // OnClick(item.id, editedAnswer);
     }
   }
-
+  
   
   return (
     <form className="flex flex-col p-10 gap-10" onSubmit={handleEditSubmit}>

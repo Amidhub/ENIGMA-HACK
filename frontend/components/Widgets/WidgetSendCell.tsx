@@ -1,6 +1,10 @@
 import WidgetCellProps from "@/types/WidgetCellProps";
 
 const WidgetSendCell = ({ item }: WidgetCellProps)=> {  
+  if (!item) {
+    return null; 
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Отправка данных:', item);
@@ -14,7 +18,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="date"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={new Date(item.date).toLocaleString()}
+          value={new Date(item?.date).toLocaleString()}
           disabled
         />        
       </div>
@@ -25,7 +29,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="fullName"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.fullName}
+          value={item?.fullName}
           disabled
         />        
       </div>
@@ -36,7 +40,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="enterprise"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.enterprise}
+          value={item?.enterprise}
           disabled
         />        
       </div>
@@ -47,7 +51,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="phoneNumber"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.phoneNumber}
+          value={item?.phoneNumber}
           disabled
         />        
       </div>
@@ -58,7 +62,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="factoryNumbers"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.factoryNumbers}
+          value={item?.factoryNumbers}
           disabled
         />        
       </div>
@@ -69,7 +73,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="typeDevices"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.typeDevices}
+          value={item?.typeDevices}
           disabled
         />        
       </div>
@@ -80,7 +84,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="email"
           id="email"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.email}
+          value={item?.email}
           disabled
         />        
       </div>
@@ -91,8 +95,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           type="text"
           id="emotionalColor"
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.emotionalСolor === 'positive' ? '😊 Позитивный' : 
-                item.emotionalСolor === 'negative' ? '😠 Негативный' : '😐 Нейтральный'}
+          value={item?.emotionalСolor}
           disabled
         />        
       </div>
@@ -103,7 +106,7 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
           id="essenceMatter"
           rows={4}
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full text-wrap-balance focus:outline-none bg-[#F5EBE0] text-[#1A1A1A]" 
-          value={item.essenceMatter}
+          value={item?.essenceMatter}
           disabled
         />
       </div>

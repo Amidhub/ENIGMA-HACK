@@ -1,14 +1,18 @@
+'use client'
+import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
 
-export default function Table({ items, setShowWidgetEdit, setShowWidgetSend, setCurrentCell }: TableProps) {
+export default function Table({setShowWidgetEdit, setShowWidgetSend} : TableProps) {
+  const { tickets, setCurrentTicket } = useTicketStore();
+
   const handleCurrentCellEdit = (item: CellTableProps, type: 'send' | 'edit') => {
-    setCurrentCell(item)
+    setCurrentTicket(item);
     if (type === 'send') {
       setShowWidgetSend(true);
-      return;
+    } else {
+      setShowWidgetEdit(true);
     }
-    setShowWidgetEdit(true);
   }
 
   return (
@@ -29,40 +33,34 @@ export default function Table({ items, setShowWidgetEdit, setShowWidgetSend, set
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
-            <tr 
-              key={item.id} 
-              className={index % 2 === 0 ? 'bg-[#F5EBE0]' : 'bg-white'}
-            >
-              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{new Date(item.date).toLocaleString()}</td>              
-              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words text-[#1A1A1A]">{item.fullName}</td>        
-              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{item.enterprise}</td>          
-              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words text-[#1A1A1A]">{item.phoneNumber}</td>    
-              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{item.factoryNumbers}</td>     
-              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words text-[#1A1A1A]">{item.typeDevices}</td>    
-              <td className="p-3 border-b border-[#D5BDAF] text-[#1A1A1A]">{item.email}</td>        
+          {tickets.map((item) => (
+            <tr key={item.id} className='animate-table'>
+              <td className="p-3 border-b border-[#D5BDAF]">{new Date(item.date).toLocaleString()}</td>              
+              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words">{item.fullName}</td>        
+              <td className="p-3 border-b border-[#D5BDAF]">{item.enterprise}</td>          
+              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words">{item.phoneNumber}</td>    
+              <td className="p-3 border-b border-[#D5BDAF]">{item.factoryNumbers}</td>     
+              <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words">{item.typeDevices}</td>    
+              <td className="p-3 border-b border-[#D5BDAF]">{item.email}</td>        
               <td className="p-3 border-b border-[#D5BDAF]">
                 <span className={
-                  item.emotionalСolor === 'positive' ? 'text-green-600 font-bold' :
-                  item.emotionalСolor === 'negative' ? 'text-red-600 font-bold' :
-                  'text-[#1A1A1A]'
-                }>
-                  {item.emotionalСolor}
+                  item.emotionalСolor === 'positive' ? 'text-green-600' :
+                  item.emotionalСolor === 'negative' ? 'text-red-600' :
+                  'text-[#646360]' 
+                }> {item.emotionalСolor}
                 </span>
               </td>        
-              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-words text-[#1A1A1A]">{item.essenceMatter}</td>  
+              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-words">{item.essenceMatter}</td>  
               <td className="p-3 border-b border-[#D5BDAF]">                                
                 <div className="flex gap-2">
                   <button 
-                    type="button" 
                     className="bg-[#D5BDAF] text-white px-3 py-1 rounded-md cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-colors" 
                     onClick={() => handleCurrentCellEdit(item, 'send')}
                   >
                     ✓
                   </button>
                   <button 
-                    type="button" 
-                    className="bg-[#F5EBE0] text-[#1A1A1A] px-3 py-1 rounded-md cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-colors" 
+                    className="bg-[#EDEDE9] text-[#1A1A1A] px-3 py-1 rounded-md cursor-pointer hover:bg-[#D5BDAF] hover:text-[#EDEDE9] transition-colors" 
                     onClick={() => handleCurrentCellEdit(item, 'edit')}
                   >
                     ✎
