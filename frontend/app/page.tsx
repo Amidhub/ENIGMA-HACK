@@ -29,7 +29,7 @@ export default function Home() {
           </button>
           
           <button 
-            className="border-2 rounded-full p-5 w-10 h-10 flex justify-center items-center border-[#D5BDAF] text-[#1A1A1A] cursor-pointer hover:bg-[#F5EBE0] transition-colors duration-300 ease-in-out" 
+            className="border-2 rounded-full p-5 w-10 h-10 flex justify-center items-center border-[#D5BDAF] text-[#1A1A1A] cursor-pointer hover:bg-[#F5EBE0] transition-colors duration-300 ease-in-out animate-export hover:border-[#1A1A1A]" 
             onClick={() => setShowWidgetExport(true)}
           >
             ⤓ 
