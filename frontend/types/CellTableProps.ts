@@ -9,4 +9,5 @@ export default interface CellTableProps {
   email: string;
   emotionalСolor: 'positive' | 'negative' | 'neutral';
   essenceMatter: string;
+  llmAnswer: string;
 }

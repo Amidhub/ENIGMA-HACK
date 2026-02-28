@@ -12,7 +12,8 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
     typeDevices: '',
     email: '',
     emotionalСolor: 'neutral',
-    essenceMatter: ''
+    essenceMatter: '',
+    llmAnswer: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -20,7 +21,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleCreateSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     OnClick(formData);
   }
@@ -142,6 +143,19 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
           rows={4}
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full text-wrap-balance focus:outline-none focus:border-[#D5BDAF] focus:ring-2 focus:ring-[#D5BDAF]/20 bg-[#F5EBE0] text-[#1A1A1A]" 
           value={formData.essenceMatter}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className="flex flex-col gap-1 w-full">
+        <label htmlFor="llmAnswer" className="text-[#1A1A1A]">Ответ нейросети</label>
+        <textarea 
+          id="llmAnswer"
+          name="llmAnswer"
+          rows={4}
+          className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full text-wrap-balance focus:outline-none focus:border-[#D5BDAF] focus:ring-2 focus:ring-[#D5BDAF]/20 bg-[#F5EBE0] text-[#1A1A1A]" 
+          value={formData.llmAnswer}
           onChange={handleChange}
           required
         />
