@@ -1,4 +1,5 @@
 import checkStatus from "@/api/tickets/checkStatus";
+import updateStatus from "@/api/tickets/updateStatus";
 import { useNotification } from "@/hooks/useNotification";
 import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
@@ -20,6 +21,19 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     llmAnswer: '',
   });
 
+  const checkTicket = async () => { 
+    const checkStatusTicket = await checkStatus(item);
+    if (checkStatusTicket.status === 'in_progress') {
+      addNotification('warning', 'Тикет занят');
+      return null;
+    }
+    const updateStatusTicket = await updateStatus(item);
+    if (!updateStatusTicket.status) {
+      return null;
+    }
+  }
+
+
   useEffect(() => {
     if (item) {
       setFormData({
@@ -35,28 +49,20 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
         llmAnswer: item.llmAnswer || '',
       });
     }
+    checkTicket();
+
   }, [item]);
 
   if (!item) {
     return <div>Загрузка...</div>;
   }
 
-  const checkTicket = async () => { 
-    const checkStatusTicket = await checkStatus(item);
-    if (checkStatusTicket.status === 'in_progress') {
-      addNotification('warning', 'Тикет занят');
-      return null;
-    }
-  }
-
-  useEffect(() => {
-    checkTicket();
-  }, [item]);
+ 
+  
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-
   };
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
