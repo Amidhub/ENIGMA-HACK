@@ -66,11 +66,6 @@ const Modal = ({
   }
 
   const handleUpdateTicket = async (ticket: CellTableProps) => {
-    const checkStatusTicket = await checkStatus(ticket);
-    if (checkStatusTicket.status === 'in_progress') {
-      addNotification('warning', 'Тикет занят')
-      return null;
-    }
     const updateStatusTicket = await updateStatus(ticket);
     if (!updateStatusTicket.success) {
       addNotification('error', 'Произошла ошибка');

@@ -1,9 +1,12 @@
-import updateTicketApi from "@/api/tickets/updateTicketApi";
+import checkStatus from "@/api/tickets/checkStatus";
+import { useNotification } from "@/hooks/useNotification";
 import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
 import { useEffect, useState } from "react";
 
 const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
+  const { addNotification } = useNotification();
+  
   const [formData, setFormData] = useState<CellTableProps>({
     date: '',
     fullName: '',
@@ -38,6 +41,18 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     return <div>Загрузка...</div>;
   }
 
+  const checkTicket = async () => { 
+    const checkStatusTicket = await checkStatus(item);
+    if (checkStatusTicket.status === 'in_progress') {
+      addNotification('warning', 'Тикет занят');
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    checkTicket();
+  }, [item]);
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
