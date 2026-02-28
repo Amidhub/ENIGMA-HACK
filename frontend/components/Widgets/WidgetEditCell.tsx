@@ -1,3 +1,4 @@
+import updateTicketApi from "@/api/tickets/updateTicketApi";
 import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
 import { useEffect, useState } from "react";
@@ -42,7 +43,7 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     setFormData(prev => ({ ...prev, [name]: value }));
 
   };
-  
+
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const updatedItem = {
@@ -51,7 +52,7 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     };
     
     if (OnClick && item?.id) {
-      OnClick(item.id, updatedItem); 
+      OnClick(updatedItem); 
     }
   }
 

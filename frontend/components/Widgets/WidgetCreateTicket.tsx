@@ -1,7 +1,6 @@
 import WidgetCellCreateProps from "@/types/WidgetCellCreateProps";
 import { useState } from "react";
 import CellTableProps from "@/types/CellTableProps";
-import { useNotification } from "@/hooks/useNotification";
 
 const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
   const [formData, setFormData] = useState<CellTableProps>({

@@ -3,20 +3,14 @@ import { useEffect, useState } from "react";
 import PageProps from "@/types/PageProps";
 
 const usePages = () => {
-  const { tickets, fetchTickets } = useTicketStore(); 
+  const { tickets, fetchTickets, startAutoRefresh, stopAutoRefresh } = useTicketStore(); 
   const [pages, setPages] = useState<PageProps[]>([]);
   const [countPages, setCountPages] = useState<number>(1);
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState<PageProps>(pages[0]);
   
   useEffect(() => {
-    fetchTickets(); 
-    
-    const interval = setInterval(() => {
-      fetchTickets();
-    }, 20000); 
-    
-    return () => clearInterval(interval); 
+    startAutoRefresh();
   }, [fetchTickets]);
 
   useEffect(() => {
