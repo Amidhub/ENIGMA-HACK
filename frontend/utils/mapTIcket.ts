@@ -1,5 +1,3 @@
-// TicketResponse должен быть определен где-то у тебя
-
 import CellTableProps from "@/types/CellTableProps";
 import TicketResponse from "@/types/ResponseTicketProps";
 
@@ -19,7 +17,6 @@ const mapTickets = (apiTickets: TicketResponse[]): CellTableProps[] => {
   }));
 };
 
-// Вспомогательная функция для маппинга эмоций
 const mapSentiment = (sentiment: string | null): 'positive' | 'negative' | 'neutral' => {
   switch (sentiment) {
     case 'POSITIVE': return 'positive';
