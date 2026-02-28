@@ -21,6 +21,13 @@ class TickReq:
             return res.scalars().all()
     
     @classmethod
+    async def get_status(cls, id):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(id = id)
+            res = await session.execute(query)
+            return res.scalar_one_or_none()
+    
+    @classmethod
     async def get_one_or_none(cls, **kwargs):
         async with async_session_maker() as session:
             query = select(cls.model).filter_by(**kwargs)
