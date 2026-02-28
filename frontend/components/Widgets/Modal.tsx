@@ -6,6 +6,7 @@ import WidgetSendCell from "@/components/Widgets/WidgetSendCell";
 import WidgetEditCell from "@/components/Widgets/WidgetEditCell";
 import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
+import { useNotification } from "@/hooks/useNotification";
 
 interface ModalProps {
   showWidgetCreate: boolean;
@@ -28,12 +29,12 @@ const Modal = ({
   setShowWidgetCreate,
   setShowWidgetExport 
 } : ModalProps) => {
+  const { addNotification } = useNotification();
   
   const { tickets, currentTicket, addTicket, updateTicket } = useTicketStore();
 
   const modalClass = "fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out";
   const contentClass = "bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]";
-  console.log(currentTicket);
   
   return (
     <>
@@ -53,6 +54,7 @@ const Modal = ({
               const nextId = tickets.length > 0 ? Math.max(...tickets.map(t => t.id as number)) + 1 : 1;
               addTicket({ ...item, id: nextId });
               setShowWidgetCreate(false);
+              addNotification('success', 'Тикет успешно создан')
             }}
           />
         </div>

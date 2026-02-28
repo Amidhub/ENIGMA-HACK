@@ -117,7 +117,7 @@ const WidgetExportFile = ({items, OnClick}: WidgetExportFileProps) => {
           type="submit" 
           className="border-2 rounded-full p-2 w-full cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-all duration-270 bg-[#D5BDAF] text-white"
         >
-          Сохранить
+          Скачать
         </button>
       </div>
     </form>

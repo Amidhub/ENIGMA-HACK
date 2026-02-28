@@ -37,16 +37,12 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     return <div>Загрузка...</div>;
   }
 
- 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
 
   };
-
- 
-
+  
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const updatedItem = {
