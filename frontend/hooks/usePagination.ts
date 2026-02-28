@@ -14,7 +14,6 @@ const usePagination = () => {
     console.log(tickets);
     
     const interval = setInterval(() => {
-      console.log('🔄 Авто-обновление тикетов...');
       fetchTickets();
     }, 20000); 
     
