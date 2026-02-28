@@ -1,8 +1,8 @@
-"""add_received_date_correctly
+"""init
 
-Revision ID: c5d8df0ab2f0
+Revision ID: 33655cc0e090
 Revises: 
-Create Date: 2026-02-25 20:08:54.028525
+Create Date: 2026-02-28 20:11:26.647155
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'c5d8df0ab2f0'
+revision: str = '33655cc0e090'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,7 +24,7 @@ def upgrade() -> None:
     op.create_table('tickets',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('received_date', sa.DateTime(), nullable=False, comment='Дата поступления письма'),
-    sa.Column('status', sa.Enum('NEW', 'IN_PROGRESS', 'ANSWERED', 'NEEDS_REVIEW', name='statusenum'), nullable=False, comment='Статус обработки'),
+    sa.Column('status', sa.String(), nullable=False, comment='Статус обработки'),
     sa.Column('full_name', sa.String(length=255), nullable=True, comment='ФИО отправителя'),
     sa.Column('email', sa.String(length=100), nullable=False, comment='Email отправителя'),
     sa.Column('phone', sa.String(length=50), nullable=True, comment='Контактный телефон'),
@@ -34,7 +34,7 @@ def upgrade() -> None:
     sa.Column('original_text', sa.Text(), nullable=False, comment='Полный текст письма'),
     sa.Column('issue_summary', sa.Text(), nullable=True, comment='Краткое описание проблемы или запрос'),
     sa.Column('category', sa.String(length=100), nullable=True, comment='Категория вопроса (неисправность/калибровка/запрос документации)'),
-    sa.Column('sentiment', sa.Enum('POSITIVE', 'NEUTRAL', 'NEGATIVE', name='sentimentenum'), nullable=True, comment='Эмоциональный окрас письма'),
+    sa.Column('sentiment', sa.String(), nullable=True, comment='Эмоциональный окрас письма'),
     sa.Column('confidence', sa.Float(), nullable=True, comment='Уверенность модели в анализе'),
     sa.Column('extracted_entities', sa.JSON(), nullable=True, comment='Дополнительные сущности (номера заказов, даты и т.п.)'),
     sa.Column('generated_response', sa.Text(), nullable=True, comment='Сгенерированный AI ответ на основе базы знаний'),

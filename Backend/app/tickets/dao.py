@@ -56,11 +56,26 @@ class TickReq:
             await session.execute(query)
             await session.commit()
             
+    # @classmethod
+    # async def delete_ticket(cls, **data):
+    #     async with async_session_maker() as session:
+    #         query = delete(cls.model).filter_by(**data)
+    #         result = await session.execute(query)
+    #         await session.commit()
+            
+    #         return result.rowcount > 0
+    # ПЕРЕДЕЛАТЬ В ОДНУ ТРАНЗАКИЮ!!!!! Depend
     @classmethod
-    async def delete_ticket(cls, **data):
+    async def delete_ticket(cls, ticket_id: int):
         async with async_session_maker() as session:
-            query = delete(cls.model).filter_by(**data)
+            query = select(cls.model).where(cls.model.id == ticket_id)
             result = await session.execute(query)
+            ticket = result.scalar_one_or_none()
+            
+            if not ticket:
+                return None
+            
+            await session.delete(ticket)
             await session.commit()
             
-            return result.rowcount > 0
+            return ticket

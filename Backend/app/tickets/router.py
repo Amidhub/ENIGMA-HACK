@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.get("", response_model=List[TicketResponse])
 async def get(status : Literal["new", "processing", "answered"]):
-    return await TickReq.get_all(status)
+    return await TickReq.get_all(status = status)
 
 
 @router.post("", response_model=TicketResponse)
@@ -22,14 +22,11 @@ async def get(data : TicketCreate):
     return await TickReq.add_ticket(**data)
 
 @router.patch('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-async def update(id: int, data: TicketUpdate) -> dict:
-    
+async def update(id: int, data: TicketUpdate):
     data = data.model_dump(exclude_unset=True)
-    
     await TickReq.update_ticket(id, **data)
 
-
-@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{id}', status_code=status.HTTP_200_OK)
 async def delete(id: int):
     row = await TickReq.delete_ticket(id)
     

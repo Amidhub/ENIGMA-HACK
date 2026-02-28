@@ -6,13 +6,15 @@ from pydantic import BaseModel, EmailStr
 
 class TicketResponse(BaseModel):
     id: int
-    email: str
-    subject: str
-    original_text: str
-    generated_answer: str | None
-    final_answer: str | None
-    status: str
-    created_at: datetime
+    created_at : datetime
+    company_object : str | None
+    phone : str | None
+    serial_numbers : str | None
+    device_type : str | None
+    email: str | None
+    sentiment : str | None
+    original_text : str | None
+    generated_response : str | None
 
 class TicketUpdate(BaseModel):
     subject: str | None = None

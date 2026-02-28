@@ -11,7 +11,9 @@ class Setting(BaseSettings):
     DB_NAME : str
     
     EMAIL_PASSWORD : str
-    EMAIL_LOGIN : str
+    EMAIL_USER : str
+    SMTP_HOST : str
+    SMTP_PORT : int
 
     class Config:
         env_file = ".env"

@@ -1,5 +1,5 @@
 from typing import Annotated, Literal
-
+from pydantic import BaseModel
 from app.database import Base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Enum, String, Text, DateTime, Integer, Float, JSON
@@ -7,16 +7,6 @@ from datetime import datetime
 import enum
 from typing import Optional
 
-class SentimentEnum(str, enum.Enum):
-    POSITIVE = "positive"
-    NEUTRAL = "neutral"
-    NEGATIVE = "negative"
-
-class StatusEnum(str, enum.Enum):
-    NEW = "new"
-    IN_PROGRESS = "in_progress"
-    ANSWERED = "answered"
-    NEEDS_REVIEW = "needs_review"
 
 class Ticket(Base):
     __tablename__ = "tickets"
@@ -28,9 +18,8 @@ class Ticket(Base):
         default=datetime.utcnow,
         comment="Дата поступления письма"
     )
-    status: Mapped[StatusEnum] = mapped_column(
-        Enum(StatusEnum),
-        default=StatusEnum.NEW,
+    status: Mapped[str] = mapped_column(
+        default='new',
         comment="Статус обработки"
     )
     
@@ -84,8 +73,7 @@ class Ticket(Base):
     )
     
     # Результаты AI-анализа
-    sentiment: Mapped[Optional[SentimentEnum]] = mapped_column(
-        Enum(SentimentEnum), 
+    sentiment: Mapped[Optional[str]] = mapped_column(
         nullable=True,
         comment="Эмоциональный окрас письма"
     )
