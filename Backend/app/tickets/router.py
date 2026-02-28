@@ -17,6 +17,12 @@ async def get(status : Literal["new", "in_progress"]):
     return await TickReq.get_all(status = status)
 
 
+@router.get("/check")
+async def get(id : int):
+    row = await TickReq.get_status(id = id)
+    return row.status
+
+
 @router.post("", status_code=status.HTTP_201_CREATED)
 async def get(data : TicketCreate):
     ticket_data = data.model_dump(exclude_unset=True)
