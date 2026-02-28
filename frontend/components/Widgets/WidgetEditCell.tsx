@@ -1,28 +1,51 @@
 import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
   const [formData, setFormData] = useState<CellTableProps>({
-    date: item?.date.slice(0, 16),
-    fullName: item?.fullName,
-    enterprise: item?.enterprise,
-    phoneNumber: item?.phoneNumber,
-    factoryNumbers: item?.factoryNumbers,
-    typeDevices: item?.typeDevices,
-    email: item?.email ,
-    emotionalСolor: item?.emotionalСolor,
-    essenceMatter: item?.essenceMatter
+    date: '',
+    fullName: '',
+    enterprise: '',
+    phoneNumber: '',
+    factoryNumbers: '',
+    typeDevices: '',
+    email: '',
+    emotionalСolor: 'neutral',
+    essenceMatter: '',
+    llmAnswer: '',
   });
+
+  useEffect(() => {
+    if (item) {
+      setFormData({
+        date: item.date?.slice(0, 16) || '',
+        fullName: item.fullName || '',
+        enterprise: item.enterprise || '',
+        phoneNumber: item.phoneNumber || '',
+        factoryNumbers: item.factoryNumbers || '',
+        typeDevices: item.typeDevices || '',
+        email: item.email || '',
+        emotionalСolor: item.emotionalСolor || 'neutral',
+        essenceMatter: item.essenceMatter || '',
+        llmAnswer: item.llmAnswer || '',
+      });
+    }
+  }, [item]);
+
+  if (!item) {
+    return <div>Загрузка...</div>;
+  }
+
+ 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+
   };
 
-  if (!item) {
-    return null; 
-  }
+ 
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -153,6 +176,19 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
           rows={4}
           className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full text-wrap-balance focus:outline-none focus:border-[#D5BDAF] focus:ring-2 focus:ring-[#D5BDAF]/20 bg-[#F5EBE0] text-[#1A1A1A]" 
           value={formData.essenceMatter}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className="flex flex-col gap-1 w-full">
+        <label htmlFor="llmAnswer" className="text-[#1A1A1A]">Ответ нейросети</label>
+        <textarea 
+          id="llmAnswer"
+          name="llmAnswer"
+          rows={4}
+          className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full text-wrap-balance focus:outline-none focus:border-[#D5BDAF] focus:ring-2 focus:ring-[#D5BDAF]/20 bg-[#F5EBE0] text-[#1A1A1A]" 
+          value={formData.llmAnswer}
           onChange={handleChange}
           required
         />

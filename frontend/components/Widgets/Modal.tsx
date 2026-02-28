@@ -33,7 +33,8 @@ const Modal = ({
 
   const modalClass = "fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out";
   const contentClass = "bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]";
-
+  console.log(currentTicket);
+  
   return (
     <>
       <div className={`${modalClass} ${showWidgetExport ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetExport(false)}>
@@ -60,7 +61,7 @@ const Modal = ({
       <div className={`${modalClass} ${showWidgetEdit ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setShowWidgetEdit(false)}>
         <div className={contentClass} onClick={e => e.stopPropagation()}>
           <WidgetEditCell 
-            item={currentTicket  as CellTableProps}
+            item={currentTicket as CellTableProps}
             OnClick={(id, updatedItem) => {
               updateTicket(id, updatedItem)
               setShowWidgetEdit(false);

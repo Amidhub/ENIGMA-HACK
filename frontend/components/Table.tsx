@@ -28,6 +28,7 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
             <th className="p-3 text-left">Email</th>
             <th className="p-3 text-left">Эмоция</th>
             <th className="p-3 text-left">Суть вопроса</th>
+            <th className="p-3 text-left">Ответ нейросети</th>
             <th className="p-3 text-left">Действие</th>
           </tr>
         </thead>
@@ -49,7 +50,8 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
                 }> {item.emotionalСolor}
                 </span>
               </td>        
-              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-word">{item.essenceMatter}</td>  
+              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-word whitespace-normal w-1/5 ">{item.essenceMatter}</td>
+              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-word w-1/5">{item.llmAnswer}</td>  
               <td className="p-3 border-b border-[#D5BDAF]">                                
                 <div className="flex gap-2">
                   <button 
