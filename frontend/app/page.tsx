@@ -1,9 +1,10 @@
 'use client'
+
 import InputFind from "@/components/InputFInd";
 import PaginationPages from "@/components/PaginationPages";
 import Table from "@/components/Table";
 import Modal from "@/components/Widgets/Modal";
-import usePagination from "@/hooks/usePagination";
+import usePages from "@/hooks/usePages";
 import useWidget from "@/hooks/useWidget";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -27,7 +28,9 @@ export default function Home() {
     goNextPage,
     goPrevPage,
     goPagePressPage,
-  } = usePagination();
+    sortPageDate,
+    sortPageEmotial
+  } = usePages();
 
   const router = useRouter();
 
@@ -50,7 +53,6 @@ export default function Home() {
           </div>
         </div>
       </header>
-      
       <main className="flex-1 pt-20 pb-4 px-4">
         <div className="container mx-auto">
           <div className="flex flex-col gap-4 w-full">
@@ -88,6 +90,8 @@ export default function Home() {
               <Table 
                 setShowWidgetSend={setShowWidgetSend} 
                 setShowWidgetEdit={setShowWidgetEdit} 
+                sortPageDate={sortPageDate}
+                sortPageEmotial={sortPageEmotial}
                 currentPage={currentPage}
               />
             </div>

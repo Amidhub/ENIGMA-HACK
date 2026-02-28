@@ -1,10 +1,15 @@
 'use client'
+
 import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
+import { useEffect, useState } from "react";
 
-export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage} : TableProps) {
-  const { setCurrentTicket } = useTicketStore();
+export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage, sortPageDate, sortPageEmotial} : TableProps) {
+  const { setCurrentTicket } = useTicketStore();  
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const [sortEmotionalСolor, setSortEmotionalСolor] = useState<'neutral' | 'positive' | 'negative'>('neutral')
+
 
   const handleCurrentCellEdit = (item: CellTableProps, type: 'send' | 'edit') => {
     setCurrentTicket(item);
@@ -14,19 +19,54 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
       setShowWidgetEdit(true);
     }
   }
+  const handleSortDate = () => {
+    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+    sortPageDate(sortDirection)
+  }
+
+  const handleSortEmotional = () => {
+    const nextValue = sortEmotionalСolor === 'positive' 
+    ? 'neutral'  
+    : sortEmotionalСolor === 'neutral' 
+      ? 'negative' 
+      : 'positive';
+  
+    setSortEmotionalСolor(nextValue);
+    sortPageEmotial(nextValue)
+  }
+  const getEmotionalIcon = () => {
+    if (sortEmotionalСolor === 'positive') return '↑';
+    if (sortEmotionalСolor === 'neutral') return '−';
+    return '↓';
+  };
+
   return (
-    <div  className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm">
+    <div className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm pointer-events-auto">
       <table className="w-full border-collapse">
         <thead className="bg-[#D5BDAF] text-white uppercase text-sm">
           <tr>
-            <th className="p-3 text-left">Дата</th>
+            <th className="p-3 text-left">
+              <div className="flex items-center gap-2">
+                Дата
+                <button className="cursor-pointer hover:bg-[#F5EBE0] p-1 rounded transition-colors" onClick={handleSortDate}>
+                  {sortDirection === 'asc' ? '↑' : '↓'}
+                </button>
+              </div>
+            </th>      
             <th className="p-3 text-left">ФИО</th>
             <th className="p-3 text-left">Организация</th>
             <th className="p-3 text-left">Телефон</th>
             <th className="p-3 text-left">Заводской №</th>
             <th className="p-3 text-left">Тип устройства</th>
             <th className="p-3 text-left">Email</th>
-            <th className="p-3 text-left">Эмоция</th>
+            <th className="p-3 text-left">
+              <div className="flex items-center gap-2">
+                Эмоция
+                <button className="cursor-pointer hover:bg-[#F5EBE0] p-1 rounded transition-colors" onClick={handleSortEmotional}>
+                  {getEmotionalIcon()}
+                </button>
+              </div>
+            </th>
             <th className="p-3 text-left">Суть вопроса</th>
             <th className="p-3 text-left">Ответ нейросети</th>
             <th className="p-3 text-left">Действие</th>

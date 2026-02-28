@@ -11,26 +11,26 @@ const InputFind = () => {
   const [filterEmail, setFilterEmail] = useState<string>('');
   const originalTicketsRef = useRef<CellTableProps[]>([]);
   
-  // useEffect(() => {
-  //   if (tickets.length > originalTicketsRef.current.length) {
-  //     originalTicketsRef.current = [...tickets]; 
-  //   }
-  // }, [tickets]); 
+  useEffect(() => {
+    if (tickets.length > originalTicketsRef.current.length) {
+      originalTicketsRef.current = [...tickets]; 
+    }
+  }, [tickets]); 
 
-  // const filterTickets = () => {   
-  //   if (filterEmail.trim() === '') {
-  //     setTickets(originalTicketsRef.current);
-  //   } else {
-  //     const filteredTickets = originalTicketsRef.current.filter(ticket => 
-  //       ticket.email.toLowerCase().includes(filterEmail.toLowerCase())
-  //     );
-  //     setTickets(filteredTickets);
-  //   }
-  // }
+  const filterTickets = () => {   
+    if (filterEmail.trim() === '') {
+      setTickets(originalTicketsRef.current);
+    } else {
+      const filteredTickets = originalTicketsRef.current.filter(ticket => 
+        ticket.email.toLowerCase().startsWith(filterEmail.toLowerCase())
+      );
+      setTickets(filteredTickets);
+    }
+  }
 
-  // useEffect(() => {
-  //   filterTickets();
-  // }, [filterEmail]);
+  useEffect(() => {
+    filterTickets();
+  }, [filterEmail]);
 
   const resetFilter = () => {
     setFilterEmail('');

@@ -2,7 +2,7 @@ import { useTicketStore } from "@/store/useTicketStore";
 import { useEffect, useState } from "react";
 import PageProps from "@/types/PageProps";
 
-const usePagination = () => {
+const usePages = () => {
   const { tickets, fetchTickets } = useTicketStore(); 
   const [pages, setPages] = useState<PageProps[]>([]);
   const [countPages, setCountPages] = useState<number>(1);
@@ -11,7 +11,6 @@ const usePagination = () => {
   
   useEffect(() => {
     fetchTickets(); 
-    console.log(tickets);
     
     const interval = setInterval(() => {
       fetchTickets();
@@ -68,6 +67,37 @@ const usePagination = () => {
     setCurrentPage(pages[numberPage - 1])
   }
 
+  const sortPageDate = (sortType: 'asc' | 'desc') => {
+    currentPage.tickets.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      
+      return sortType === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+  };
+
+  const sortPageEmotial = (sortType: 'positive' | 'neutral' | 'negative') => {
+    const emotionalOrder = {
+      positive: 1,
+      neutral: 2, 
+      negative: 3
+    };
+
+    currentPage.tickets.sort((a, b) => {
+      if (sortType === 'positive') {
+        return emotionalOrder[a.emotionalСolor] - emotionalOrder[b.emotionalСolor];
+      }
+      else if (sortType === 'negative') {
+        return emotionalOrder[b.emotionalСolor] - emotionalOrder[a.emotionalСolor];
+      } else {
+        if (a.emotionalСolor === 'neutral') return -1;
+        if (b.emotionalСolor === 'neutral') return 1;
+        return 0;
+      }
+    });
+
+  };
+
   return {
     countPages, 
     currentPage,
@@ -77,7 +107,9 @@ const usePagination = () => {
     goNextPage,
     goPrevPage,
     goPagePressPage,
+    sortPageDate,
+    sortPageEmotial,
   }
 }
 
-export default usePagination;
+export default usePages;
