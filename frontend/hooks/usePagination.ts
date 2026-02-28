@@ -3,13 +3,24 @@ import { useEffect, useState } from "react";
 import PageProps from "@/types/PageProps";
 
 const usePagination = () => {
-  const { tickets } = useTicketStore();
+  const { tickets, fetchTickets } = useTicketStore(); 
   const [pages, setPages] = useState<PageProps[]>([]);
   const [countPages, setCountPages] = useState<number>(1);
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState<PageProps>(pages[0]);
-
   
+  useEffect(() => {
+    fetchTickets(); 
+    console.log(tickets);
+    
+    const interval = setInterval(() => {
+      console.log('🔄 Авто-обновление тикетов...');
+      fetchTickets();
+    }, 20000); 
+    
+    return () => clearInterval(interval); 
+  }, [fetchTickets]);
+
   useEffect(() => {
     const totalPages = Math.ceil(tickets.length / itemsPerPage);
     const newPages = [];
@@ -28,6 +39,7 @@ const usePagination = () => {
     }
     
     setPages(newPages);
+    setCountPages(totalPages);
     
     if (currentPage) {
       const updatedPage = newPages.find(p => p.page === currentPage.page);
@@ -42,24 +54,18 @@ const usePagination = () => {
   }, [tickets]);
 
   const goNextPage = () => {
-    if (currentPage?.page === countPages) {
-      return null;
-    }
+    if (currentPage?.page === countPages) return;
     const nextPage = pages.find(p => p.page === currentPage!.page + 1);
     if (nextPage) setCurrentPage(nextPage);
   }
 
   const goPrevPage = () => {
-    if (currentPage?.page === 1) {
-      return null;
-    }
+    if (currentPage?.page === 1) return;
     const prevPage = pages.find(p => p.page === currentPage!.page - 1);
     if (prevPage) setCurrentPage(prevPage);
   }
 
   const goPagePressPage = (numberPage: number) => {
-    console.log(numberPage);
-    
     setCurrentPage(pages[numberPage - 1])
   }
 
@@ -68,7 +74,6 @@ const usePagination = () => {
     currentPage,
     pages,
     itemsPerPage,
-    setCountPages,
     setCurrentPage,
     goNextPage,
     goPrevPage,
