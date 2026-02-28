@@ -22,6 +22,7 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
   });
 
   const checkTicket = async () => { 
+    if (!item?.id) return;
     const checkStatusTicket = await checkStatus(item);
     if (checkStatusTicket.status === 'in_progress') {
       addNotification('warning', 'Тикет занят');

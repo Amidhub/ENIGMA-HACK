@@ -12,21 +12,21 @@ const InputFind = () => {
   const originalTicketsRef = useRef<CellTableProps[]>([]);
   
   useEffect(() => {
-    if (tickets.length > originalTicketsRef.current.length) {
-      originalTicketsRef.current = [...tickets]; 
+    if (tickets.length > 0 && JSON.stringify(tickets) !== JSON.stringify(originalTicketsRef.current)) {
+      originalTicketsRef.current = [...tickets];
     }
-  }, [tickets]); 
+  }, [tickets]);
 
-  const filterTickets = () => {   
+  const filterTickets = () => {
     if (filterEmail.trim() === '') {
       setTickets(originalTicketsRef.current);
     } else {
-      const filteredTickets = originalTicketsRef.current.filter(ticket => 
+      const filtered = originalTicketsRef.current.filter(ticket => 
         ticket.email.toLowerCase().startsWith(filterEmail.toLowerCase())
       );
-      setTickets(filteredTickets);
+      setTickets(filtered);
     }
-  }
+  };
 
   useEffect(() => {
     filterTickets();
@@ -35,7 +35,7 @@ const InputFind = () => {
   const resetFilter = () => {
     setFilterEmail('');
     setTickets(originalTicketsRef.current);
-  }
+  };
 
   return (
     <div className="flex justify-center items-center gap-2">
@@ -58,6 +58,6 @@ const InputFind = () => {
       )}
     </div>
   );
-} 
+};
 
 export default InputFind;
