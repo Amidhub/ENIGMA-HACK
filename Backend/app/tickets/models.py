@@ -11,7 +11,6 @@ from typing import Optional
 class Ticket(Base):
     __tablename__ = "tickets"
     
-    # Системные поля (автоматические)
     id: Mapped[int] = mapped_column(primary_key=True)
     received_date: Mapped[datetime] = mapped_column(
         DateTime, 

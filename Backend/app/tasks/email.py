@@ -3,19 +3,17 @@ from app.config import setting
 from pydantic import EmailStr
 
 def create_booking_confirmation_template(
-    email_to : EmailStr
+    email_to : EmailStr,
+    answer : str
 ):
     email = EmailMessage()
     
-    email["Subject"] = "Подтверждение бронирования"
+    email["Subject"] = "Ответ на сообщение"
     email["From"] = setting.EMAIL_USER
     email["To"] = email_to
     
     email.set_content(
-        f"""
-            <h1>TEST ANSWER</h1>
-            
-        """,
+        answer,
         subtype = "html"
     )
     

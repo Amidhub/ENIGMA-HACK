@@ -13,13 +13,15 @@ router = APIRouter(
 )
 
 @router.get("", response_model=List[TicketResponse])
-async def get(status : Literal["new", "processing", "answered"]):
+async def get(status : Literal["new", "in_progress"]):
     return await TickReq.get_all(status = status)
 
 
-@router.post("", response_model=TicketResponse)
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def get(data : TicketCreate):
-    return await TickReq.add_ticket(**data)
+    ticket_data = data.model_dump(exclude_unset=True)
+    await TickReq.add_ticket(**ticket_data)
+
 
 @router.patch('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def update(id: int, data: TicketUpdate):

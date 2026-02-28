@@ -14,6 +14,8 @@ class Setting(BaseSettings):
     EMAIL_USER : str
     SMTP_HOST : str
     SMTP_PORT : int
+    
+    IMAP_HOST : str
 
     class Config:
         env_file = ".env"

@@ -2,11 +2,12 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException, Request, Response, status, Depends, Form
 from fastapi.responses import RedirectResponse
+from pydantic import BaseModel
 from app.tickets.dao import TickReq
 from app.email.schemas import Answer_to_email
 from app.tasks.tasks import send_answer_email
 
-from typing import Literal
+from app.tasks.tasks import process_new_emails_task
 
 router = APIRouter(
     prefix="/email",
@@ -21,3 +22,20 @@ async def get(data : Answer_to_email):
             answer=data.answer,
             email_to=data.email
         )
+
+
+class CheckResponse(BaseModel):
+    task_id: str
+    message: str
+
+@router.post("/check", response_model=CheckResponse)
+async def trigger_email_check():
+    """
+    Фронт вызывает эту ручку, когда хочет проверить почту
+    Бэкенд запускает Celery задачу и сразу отвечает
+    """
+    task = process_new_emails_task.delay()
+    return {
+        "task_id": task.id,
+        "message": "Проверка почты запущена"
+    }
