@@ -3,7 +3,7 @@
 import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage, sortPageDate, sortPageEmotial} : TableProps) {
   const { setCurrentTicket } = useTicketStore();  

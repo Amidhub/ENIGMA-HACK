@@ -1,6 +1,6 @@
 import WidgetCellProps from "@/types/WidgetCellProps";
 
-const WidgetSendCell = ({ item }: WidgetCellProps)=> {  
+const WidgetSendCell = ({ item, OnClick }: WidgetCellProps)=> {  
   if (!item) {
     return null; 
   }
@@ -8,6 +8,10 @@ const WidgetSendCell = ({ item }: WidgetCellProps)=> {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Отправка данных:', item);
+    if (OnClick) {
+      OnClick(item);
+    }
+   
   }
 
   return (
