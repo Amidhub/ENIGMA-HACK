@@ -10,6 +10,7 @@ from redis import asyncio as aioredis
 # from sqladmin import Admin
 from app.tickets.router import router as router_tickets
 from app.email.router import router as router_email
+from app.operator.router import router as router_oper
 from fastapi.middleware.cors import CORSMiddleware
 
 import sys
@@ -53,5 +54,6 @@ app.add_middleware(
 
 app.include_router(router_tickets)
 app.include_router(router_email)
+app.include_router(router_oper)
 
 

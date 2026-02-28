@@ -17,7 +17,7 @@ async def get(status : Literal["new", "in_progress"]):
     return await TickReq.get_all(status = status)
 
 
-@router.get("/check")
+@router.get("/check/{id}")
 async def get(id : int):
     row = await TickReq.get_status(id = id)
     return row.status

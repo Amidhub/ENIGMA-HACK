@@ -14,6 +14,7 @@ config = context.config
 from app.database import Base, DATABASE_URL
 from app.tickets.models import Ticket
 from app.history.models import TicketHistory
+from app.operator.models import Operator
 
 
 sys.path.insert(0,dirname(dirname(dirname(abspath(__file__)))))

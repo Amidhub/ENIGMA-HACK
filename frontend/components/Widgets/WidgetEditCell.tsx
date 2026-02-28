@@ -19,7 +19,13 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     essenceMatter: '',
     llmAnswer: '',
   });
-
+const checkTicket = async () => { 
+    const checkStatusTicket = await checkStatus(item);
+    if (checkStatusTicket.status === 'in_progress') {
+      addNotification('warning', 'Тикет занят');
+      return null;
+    }
+  }
   useEffect(() => {
     if (item) {
       setFormData({
@@ -35,23 +41,17 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
         llmAnswer: item.llmAnswer || '',
       });
     }
+    checkTicket();
   }, [item]);
-
+  
+ 
   if (!item) {
     return <div>Загрузка...</div>;
   }
 
-  const checkTicket = async () => { 
-    const checkStatusTicket = await checkStatus(item);
-    if (checkStatusTicket.status === 'in_progress') {
-      addNotification('warning', 'Тикет занят');
-      return null;
-    }
-  }
+  
 
-  useEffect(() => {
-    checkTicket();
-  }, [item]);
+
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
