@@ -1,7 +1,6 @@
 import CellTableProps from "@/types/CellTableProps";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
 interface TicketStore {
   tickets: CellTableProps[];
   currentTicket: CellTableProps | null;

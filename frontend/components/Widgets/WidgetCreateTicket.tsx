@@ -20,7 +20,7 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleCreateSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     OnClick(formData);
   }

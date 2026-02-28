@@ -28,6 +28,7 @@ const Modal = ({
   setShowWidgetCreate,
   setShowWidgetExport 
 } : ModalProps) => {
+  
   const { tickets, currentTicket, addTicket, updateTicket } = useTicketStore();
 
   const modalClass = "fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-[opacity,visibility] duration-300 ease-in-out";
@@ -60,7 +61,8 @@ const Modal = ({
         <div className={contentClass} onClick={e => e.stopPropagation()}>
           <WidgetEditCell 
             item={currentTicket  as CellTableProps}
-            OnClick={(id, answer) => {
+            OnClick={(id, updatedItem) => {
+              updateTicket(id, updatedItem)
               setShowWidgetEdit(false);
             }}
           />
@@ -72,7 +74,6 @@ const Modal = ({
           <WidgetSendCell 
             item={currentTicket as CellTableProps}
             OnClick={() => {
-              console.log('Отправка ответа');
               setShowWidgetSend(false);
             }}
           />

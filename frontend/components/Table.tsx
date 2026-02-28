@@ -3,8 +3,8 @@ import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
 
-export default function Table({setShowWidgetEdit, setShowWidgetSend} : TableProps) {
-  const { tickets, setCurrentTicket } = useTicketStore();
+export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage} : TableProps) {
+  const { setCurrentTicket } = useTicketStore();
 
   const handleCurrentCellEdit = (item: CellTableProps, type: 'send' | 'edit') => {
     setCurrentTicket(item);
@@ -14,9 +14,8 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend} : TableProp
       setShowWidgetEdit(true);
     }
   }
-
   return (
-    <div className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm">
+    <div  className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm">
       <table className="w-full border-collapse">
         <thead className="bg-[#D5BDAF] text-white uppercase text-sm">
           <tr>
@@ -33,7 +32,7 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend} : TableProp
           </tr>
         </thead>
         <tbody>
-          {tickets.map((item) => (
+          {currentPage?.tickets.map((item) => (
             <tr key={item.id} className='animate-table'>
               <td className="p-3 border-b border-[#D5BDAF]">{new Date(item.date).toLocaleString()}</td>              
               <td className="p-3 border-b border-[#D5BDAF] max-w-xs wrap-break-words">{item.fullName}</td>        
@@ -50,7 +49,7 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend} : TableProp
                 }> {item.emotionalСolor}
                 </span>
               </td>        
-              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-words">{item.essenceMatter}</td>  
+              <td className="p-3 border-b border-[#D5BDAF] max-w-md wrap-break-word">{item.essenceMatter}</td>  
               <td className="p-3 border-b border-[#D5BDAF]">                                
                 <div className="flex gap-2">
                   <button 
