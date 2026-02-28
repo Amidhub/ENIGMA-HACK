@@ -11,7 +11,6 @@ const WidgetSendCell = ({ item, OnClick }: WidgetCellProps)=> {
     if (OnClick) {
       OnClick(item);
     }
-   
   }
 
   return (

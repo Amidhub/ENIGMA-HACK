@@ -34,7 +34,6 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     }
   }
 
-
   useEffect(() => {
     if (item) {
       setFormData({
@@ -58,9 +57,6 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     return <div>Загрузка...</div>;
   }
 
- 
-  
-  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
