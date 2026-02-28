@@ -32,21 +32,16 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     
 app = FastAPI(lifespan=lifespan)
 
-
-app.include_router(router_tickets)
-app.include_router(router_email)
-
-
 #CORS
 origins = [
-    "http//:localhost:3000"
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT"],
+    allow_methods=["*"],
     allow_headers=[
         "Content-Type",
         "Authorization",
@@ -55,3 +50,8 @@ app.add_middleware(
         "Access-Control-Allow-Origin",
     ],
 )
+
+app.include_router(router_tickets)
+app.include_router(router_email)
+
+

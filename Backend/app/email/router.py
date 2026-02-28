@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from app.tickets.dao import TickReq
 from app.email.schemas import Answer_to_email
 from app.tasks.tasks import send_answer_email
-
+from app.history.models import TicketHistory
 from app.tasks.tasks import process_new_emails_task
 
 router = APIRouter(

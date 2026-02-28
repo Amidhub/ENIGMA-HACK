@@ -29,10 +29,14 @@ async def get(data : TicketCreate):
     await TickReq.add_ticket(**ticket_data)
 
 
-@router.patch('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.patch('/{id}')
 async def update(id: int, data: TicketUpdate):
-    data = data.model_dump(exclude_unset=True)
-    await TickReq.update_ticket(id, **data)
+    try:
+        data = data.model_dump(exclude_unset=True)
+        await TickReq.update_ticket(id, **data)
+        return True
+    except:
+        return False
 
 @router.delete('/{id}', status_code=status.HTTP_200_OK)
 async def delete(id: int):

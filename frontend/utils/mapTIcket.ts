@@ -6,7 +6,7 @@ import TicketResponse from "@/types/ResponseTicketProps";
 const mapTickets = (apiTickets: TicketResponse[]): CellTableProps[] => {
   return apiTickets.map(ticket => ({
     id: ticket.id,
-    date: ticket.received_date,
+    date: ticket.created_at,
     fullName: ticket.full_name || '',
     enterprise: ticket.company_object || '',
     phoneNumber: ticket.phone || '',
