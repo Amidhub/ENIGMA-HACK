@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from app.operator.dependencise import get_current_user
 from app.operator.Schemas import authS
 from app.operator.auth import get_password_hash
 from app.operator.dao import OperReq
@@ -32,7 +33,7 @@ async def login_users(response : Response) -> None:
 
 
 @router.get('/user/{id}')
-async def login_users(id : int) -> None:
+async def login_users(id : int, oper = Depends(get_current_user)) -> None:
     row =  await OperReq.get_name(id = id)
     return row.login
 

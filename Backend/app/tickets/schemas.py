@@ -48,4 +48,4 @@ class TicketCreate(BaseModel):
     serial_numbers: Optional[str] = None
     issue_summary: Optional[str] = None
     category: Optional[str] = None
-    status: str = "new"
+    status: str = "new" 
