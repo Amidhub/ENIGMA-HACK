@@ -1,13 +1,8 @@
-import checkStatus from "@/api/tickets/checkStatus";
-import updateStatus from "@/api/tickets/updateStatus";
-import { useNotification } from "@/hooks/useNotification";
 import CellTableProps from "@/types/CellTableProps";
 import WidgetCellProps from "@/types/WidgetCellProps";
 import { useEffect, useState } from "react";
 
 const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
-  const { addNotification } = useNotification();
-  
   const [formData, setFormData] = useState<CellTableProps>({
     date: '',
     fullName: '',
@@ -38,11 +33,9 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     }
   }, [item]);
   
- 
   if (!item) {
     return <div>Загрузка...</div>;
   }
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -59,7 +52,7 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     if (OnClick && item?.id) {
       OnClick(updatedItem); 
     }
-  }
+  };
 
   return (
     <form className="flex flex-col p-10 gap-10" onSubmit={handleEditSubmit}>

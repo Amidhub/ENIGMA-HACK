@@ -41,20 +41,18 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
     return '↓';
   };
 
-
-  const checkTicket = async (item) => { 
-    if (!item?.id) return;
-
-    const checkStatusTicket = await checkStatus(item);
-    if (checkStatusTicket.status === 'in_progress') {
-      return null;
-    }
-
-    const updateStatusTicket = await updateStatus(item);
-    if (!updateStatusTicket.status) {
-      return null;
+  const handleSendClick = async (item: CellTableProps) => {
+  handleCurrentCellEdit(item, 'send');
+  
+  const status = await checkStatus(item);
+  if (status?.status !== 'in_progress') {
+    const updateResult = await updateStatus(item);
+    if (updateResult?.status) {
+      console.log('Status updated');
     }
   }
+};
+
   return (
     <div className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm pointer-events-auto">
       <table className="w-full border-collapse">
@@ -122,25 +120,21 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
                   <div className="flex gap-2">
                     <button 
                       className="bg-[#D5BDAF] text-white px-3 py-1 rounded-md cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-colors" 
-                      onClick={async () => {
-                        handleCurrentCellEdit(item, 'send')
-                        checkStatus(item);
-                        const updateStatusTicket = await updateStatus(item);
-                      }}
+                      onClick={() => handleSendClick(item)} 
                     >
                       ✓
                     </button>
                     <button 
                       className="bg-[#EDEDE9] text-[#1A1A1A] px-3 py-1 rounded-md cursor-pointer hover:bg-[#D5BDAF] hover:text-[#EDEDE9] transition-colors" 
-                      onClick={() => handleCurrentCellEdit(item, 'edit')}
+                      onClick={() => handleCurrentCellEdit(item, 'edit')} 
                     >
                       ✎
                     </button>
                   </div>
                 </td>
-              </tr>
-            ))
-          )}
+                  </tr>
+                ))
+              )}
         </tbody>
       </table>
     </div>

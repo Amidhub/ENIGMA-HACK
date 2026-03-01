@@ -12,6 +12,7 @@ import sendEmail from "@/api/sendEmail";
 import updateTicketApi from "@/api/tickets/updateTicketApi";
 import updateStatus from "@/api/tickets/updateStatus";
 import mapToApiTicket from "@/utils/mapTIcketsResponse";
+import checkStatus from "@/api/tickets/checkStatus";
 
 interface ModalProps {
   showWidgetCreate: boolean;
