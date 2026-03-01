@@ -7,6 +7,7 @@ import { persist } from "zustand/middleware";
 
 interface TicketStore {
   tickets: CellTableProps[];
+  backupTickets: CellTableProps[];
   currentTicket: CellTableProps | null;
   isLoading: boolean;
   error: string | null;
@@ -27,6 +28,7 @@ export const useTicketStore = create<TicketStore>()(
 
       return {
         tickets: [],
+        backupTickets: [],
         currentTicket: null,
         isLoading: false,
         error: null,
@@ -54,6 +56,7 @@ export const useTicketStore = create<TicketStore>()(
 
             set({ 
               tickets: mappedData, 
+              backupTickets: mappedData,
               isLoading: false 
             });
           } catch (error) {
