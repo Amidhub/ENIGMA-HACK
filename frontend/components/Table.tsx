@@ -86,7 +86,7 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
           </tr>
         </thead>
         <tbody>
-          {currentPage?.tickets.length === 0 ? (
+          {currentPage?.tickets?.length === 0 ? (
             <tr>
               <td colSpan={11} className="p-8 text-center">
                 <div className="flex flex-col items-center justify-center gap-3">
