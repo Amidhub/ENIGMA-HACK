@@ -19,13 +19,20 @@ async def login_users(response: Response, user_data: authS):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     
     jwt_token = create_access_token({'sub': str(user.id)})
-    response = RedirectResponse(url="/tasks", status_code=303)
+    # response = RedirectResponse(url="/tasks", status_code=303)
     response.set_cookie('user_access_token', jwt_token, httponly=True)
-    return response #user.id
+    
+    return user.id #user.id
 
 
 
 @router.post('/logout')
 async def login_users(response : Response) -> None:
     response.delete_cookie('user_access_token')
+
+
+@router.get('/user/{id}')
+async def login_users(id : int) -> None:
+    row =  await OperReq.get_name(id = id)
+    return row.login
 
