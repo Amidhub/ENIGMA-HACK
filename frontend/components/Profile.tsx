@@ -3,13 +3,13 @@ import useUser from "@/hooks/useUser";
 const Profile = () => {
 
   // const {
-  //   userFullName
+  //   userLogin
   // } = useUser()
 
   return (
     <div className="flex ml-auto">
       <div className="border-2 rounded-2xl border-[#1A1A1A] p-2">
-        {/* {userFullName} */}
+        {/* {userLogin} */}
       </div>
     </div>
   );

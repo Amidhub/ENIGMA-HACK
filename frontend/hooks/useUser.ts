@@ -5,7 +5,7 @@ import { useNotification } from "./useNotification";
 import { useRouter } from "next/navigation";
 
 const useUser = () => {
-  const [userFullName, setUserFullName] = useState<string>('');
+  const [userLogin, setUserLogin] = useState<string>('');
   const { addNotification } = useNotification();
   const router = useRouter();
 
@@ -21,7 +21,7 @@ const useUser = () => {
       addNotification('error', 'Ошибка');
       return null;
     }
-    setUserFullName(data.full_name);
+    setUserLogin(data.login);
   }
 
   useEffect(() => {
@@ -29,8 +29,8 @@ const useUser = () => {
   }, []);
 
   return {
-    userFullName,
-    setUserFullName,
+    userLogin,
+    setUserLogin,
     handleUserProfile,
   }
 }

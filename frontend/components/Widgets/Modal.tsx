@@ -10,8 +10,8 @@ import { useNotification } from "@/hooks/useNotification";
 import addTicketApi from "@/api/tickets/addTicketApi";
 import sendEmail from "@/api/sendEmail";
 import updateTicketApi from "@/api/tickets/updateTicketApi";
-import checkStatus from "@/api/tickets/checkStatus";
 import updateStatus from "@/api/tickets/updateStatus";
+import mapToApiTicket from "@/utils/mapTIcketsResponse";
 
 interface ModalProps {
   showWidgetCreate: boolean;
@@ -71,7 +71,7 @@ const Modal = ({
       addNotification('error', 'Произошла ошибка');
       return null;
     }
-    const data = await updateTicketApi(ticket);
+    const data = await updateTicketApi(mapToApiTicket(ticket));
     if (!data.success) {
       addNotification('error', data.msg)
       return null;
