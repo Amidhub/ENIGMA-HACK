@@ -24,6 +24,18 @@ const WidgetCreateTicket = ({ OnClick }: WidgetCellCreateProps ) => {
   const handleCreateSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     OnClick(formData);
+    setFormData({ 
+      date: new Date().toISOString(),
+      fullName: '',
+      enterprise: '',
+      phoneNumber: '',
+      factoryNumbers: '',
+      typeDevices: '',
+      email: '',
+      emotionalСolor: 'neutral',
+      essenceMatter: '',
+      llmAnswer: '',
+    })
   }
 
   return (

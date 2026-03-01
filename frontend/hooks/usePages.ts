@@ -6,7 +6,7 @@ const usePages = () => {
   const { tickets, fetchTickets, startAutoRefresh, stopAutoRefresh } = useTicketStore(); 
   const [pages, setPages] = useState<PageProps[]>([]);
   const [countPages, setCountPages] = useState<number>(1);
-  const itemsPerPage = 12;
+  const ITEMS_PER_PAGE = 12;
   const [currentPage, setCurrentPage] = useState<PageProps>(pages[0]);
   
   useEffect(() => {
@@ -14,12 +14,12 @@ const usePages = () => {
   }, [fetchTickets]);
 
   useEffect(() => {
-    const totalPages = Math.ceil(tickets.length / itemsPerPage);
+    const totalPages = Math.ceil(tickets.length / ITEMS_PER_PAGE);
     const newPages = [];
     
     for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      const startIndex = (pageNum - 1) * itemsPerPage;
-      const endIndex = Math.min(startIndex + itemsPerPage, tickets.length);
+      const startIndex = (pageNum - 1) * ITEMS_PER_PAGE;
+      const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, tickets.length);
       const pageTickets = tickets.slice(startIndex, endIndex);
       
       newPages.push({
@@ -96,7 +96,7 @@ const usePages = () => {
     countPages, 
     currentPage,
     pages,
-    itemsPerPage,
+    ITEMS_PER_PAGE,
     setCurrentPage,
     goNextPage,
     goPrevPage,

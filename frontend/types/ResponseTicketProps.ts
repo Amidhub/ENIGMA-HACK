@@ -1,7 +1,7 @@
 export default interface TicketResponse {
   id: number;
   received_date: string;  
-  status: 'NEW' | 'IN_PROGRESS' | 'ANSWERED' | 'NEEDS_REVIEW';
+  status: 'new' | 'in_progress' | 'answered' ;
   
   full_name: string | null;
   email: string;
@@ -15,7 +15,7 @@ export default interface TicketResponse {
   issue_summary: string | null;
   category: string | null;
   
-  sentiment: 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE' | null;
+  sentiment: 'positive' | 'neutral' | 'negative' | null;
   confidence: number | null;
   
   generated_response: string | null;
