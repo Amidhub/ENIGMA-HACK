@@ -43,10 +43,10 @@ const Modal = ({
 
   const handleCreateTicket = async (item: CellTableProps) => {
     const data = await addTicketApi(item);
-    if (!data.success) {
-      addNotification('error', data.msg)
-      return null;
-    }
+    // if (!data.success) {
+    //   addNotification('error', data.msg)
+    //   return null;
+    // }
     const nextId = tickets.length > 0 ? Math.max(...tickets.map(t => t.id as number)) + 1 : 1;
     addTicket({ ...item, id: nextId });
     setShowWidgetCreate(false);

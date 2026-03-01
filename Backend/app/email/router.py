@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Request, Response, status, Depends, Form
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
-from Backend.app.operator.dependencise import get_current_user
+from app.operator.dependencise import get_current_user
 from app.tickets.dao import TickReq
 from app.email.schemas import Answer_to_email
 from app.tasks.tasks import send_answer_email

@@ -33,7 +33,19 @@ class OperReq:
     @classmethod
     async def add(cls, **data):
         async with async_session_maker() as session:
-            query = insert(cls.model).values(**data)
-            await session.execute(query)
+            query = insert(cls.model).values(**data).returning(cls.model.id)
+            result = await session.execute(query)
             await session.commit()
+            
+            return result.scalar_one()  #id
+    
+    @classmethod
+    async def get_name(cls, **kwargs):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(**kwargs)
+            
+            res = await session.execute(query)
+            
+            return res.scalars().one_or_none()
+            
             
