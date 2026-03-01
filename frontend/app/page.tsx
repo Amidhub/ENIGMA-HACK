@@ -34,12 +34,12 @@ export default function Home() {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const userId = localStorage.getItem('user_id');
-  //   if (!userId) {
-  //     router.push('/login');
-  //   }
-  // }, [])
+  useEffect(() => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      router.push('/login');
+    }
+  }, [])
 
   return (
     <div className="min-h-screen flex flex-col bg-linear-to-b from-[#EDEDE9] to-[#F5EBE0]">

@@ -1,4 +1,4 @@
 export default interface UserAuthProps {
-  userLogin: string;
-  userPassword: string;
+  login: string;
+  password: string;
 }

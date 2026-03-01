@@ -3,24 +3,22 @@ import { useRouter } from "next/navigation";
 import { useState } from "react"
 
 const useAuth = () => {
-  const [userLogin, setUserLogin] = useState<string>('');
-  const [userPassword, setUsetPassword] = useState<string>('');
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const router = useRouter();
   
-  const handleAuth = async () => {
-    const data = await loginUser({userLogin, userPassword});
-    if (!data.success) {
-      return null;
-    }
-    localStorage.setItem('user_id', data.user_id);
+  const handleAuth = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const data = await loginUser({login, password});
+    localStorage.setItem('user_id', data.id);
     router.push('/');  
   }
 
   return {
-    userLogin,
-    userPassword,
-    setUserLogin,
-    setUsetPassword,
+    login,
+    password,
+    setLogin,
+    setPassword,
     handleAuth,
   }
 }

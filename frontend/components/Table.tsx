@@ -1,5 +1,7 @@
 'use client'
 
+import checkStatus from "@/api/tickets/checkStatus";
+import updateStatus from "@/api/tickets/updateStatus";
 import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
@@ -39,6 +41,20 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
     return '↓';
   };
 
+
+  const checkTicket = async (item) => { 
+    if (!item?.id) return;
+
+    const checkStatusTicket = await checkStatus(item);
+    if (checkStatusTicket.status === 'in_progress') {
+      return null;
+    }
+
+    const updateStatusTicket = await updateStatus(item);
+    if (!updateStatusTicket.status) {
+      return null;
+    }
+  }
   return (
     <div className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm pointer-events-auto">
       <table className="w-full border-collapse">
@@ -106,7 +122,11 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
                   <div className="flex gap-2">
                     <button 
                       className="bg-[#D5BDAF] text-white px-3 py-1 rounded-md cursor-pointer hover:bg-[#EDEDE9] hover:text-[#1A1A1A] transition-colors" 
-                      onClick={() => handleCurrentCellEdit(item, 'send')}
+                      onClick={async () => {
+                        handleCurrentCellEdit(item, 'send')
+                        checkStatus(item);
+                        const updateStatusTicket = await updateStatus(item);
+                      }}
                     >
                       ✓
                     </button>
