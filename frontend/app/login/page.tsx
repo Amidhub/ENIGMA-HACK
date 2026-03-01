@@ -4,10 +4,10 @@ import useAuth from "@/hooks/useAuth";
 
 const Login = () => {
   const {
-    userLogin,
-    userPassword,
-    setUserLogin,
-    setUsetPassword,
+    login,
+    password,
+    setLogin,
+    setPassword,
     handleAuth
   } = useAuth();
 
@@ -19,8 +19,8 @@ const Login = () => {
             <div className="flex flex-col gap-1 w-full">
               <label htmlFor="input-login" className="text-[#1A1A1A] font-medium">Логин</label>
               <input 
-                value={userLogin}
-                onChange={(e) => setUserLogin(e.target.value)}
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
                 type="text" 
                 className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#D5BDAF]/20 bg-[#F5EBE0] text-[#1A1A1A] placeholder:text-[#646360]/50 transition-all duration-300" 
                 id="input-login" 
@@ -31,8 +31,8 @@ const Login = () => {
               <label htmlFor="input-password" className="text-[#1A1A1A] font-medium">Пароль</label>
               <input 
                 type="password" 
-                value={userPassword}
-                onChange={(e) => setUsetPassword(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="border-2 border-[#D5BDAF] rounded-lg p-2 w-full focus:outline-none focus:border-[#1A1A1A] focus:ring-2 focus:ring-[#D5BDAF]/20 bg-[#F5EBE0] text-[#1A1A1A] placeholder:text-[#646360]/50 transition-all duration-300" 
                 id="input-password" 
                 placeholder="Введите пароль"

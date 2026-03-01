@@ -21,22 +21,6 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
     llmAnswer: '',
   });
 
-
-  const checkTicket = async () => { 
-    if (!item?.id) return;
-
-    const checkStatusTicket = await checkStatus(item);
-    if (checkStatusTicket.status === 'in_progress') {
-      addNotification('warning', 'Тикет занят');
-      return null;
-    }
-
-    const updateStatusTicket = await updateStatus(item);
-    if (!updateStatusTicket.status) {
-      return null;
-    }
-  }
-
   useEffect(() => {
     if (item) {
       setFormData({
@@ -52,8 +36,6 @@ const WidgetEditCell = ({ item, OnClick }: WidgetCellProps )=> {
         llmAnswer: item.llmAnswer || '',
       });
     }
-    checkTicket();
-
   }, [item]);
   
  

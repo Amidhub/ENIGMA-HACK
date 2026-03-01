@@ -19,6 +19,8 @@ class Setting(BaseSettings):
     
     ALGORITM : str
     SIGN : str
+    
+    API_n : str
 
     class Config:
         env_file = ".env"
