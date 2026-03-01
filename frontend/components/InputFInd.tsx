@@ -1,27 +1,20 @@
 import { useTicketStore } from "@/store/useTicketStore";
-import CellTableProps from "@/types/CellTableProps";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const InputFind = () => {
   const {
     tickets,
+    backupTickets,
     setTickets,
   } = useTicketStore();
 
   const [filterEmail, setFilterEmail] = useState<string>('');
-  const originalTicketsRef = useRef<CellTableProps[]>([]);
-  
-  useEffect(() => {
-    if (tickets.length > 0 && JSON.stringify(tickets) !== JSON.stringify(originalTicketsRef.current)) {
-      originalTicketsRef.current = [...tickets];
-    }
-  }, [tickets]);
 
   const filterTickets = () => {
     if (filterEmail.trim() === '') {
-      setTickets(originalTicketsRef.current);
+      setTickets(backupTickets);
     } else {
-      const filtered = originalTicketsRef.current.filter(ticket => 
+      const filtered = backupTickets.filter(ticket => 
         ticket.email.toLowerCase().startsWith(filterEmail.toLowerCase())
       );
       setTickets(filtered);
@@ -34,7 +27,7 @@ const InputFind = () => {
 
   const resetFilter = () => {
     setFilterEmail('');
-    setTickets(originalTicketsRef.current);
+    setTickets(backupTickets);
   };
 
   return (
