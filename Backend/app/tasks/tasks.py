@@ -3,18 +3,20 @@ from app.tasks.celery import celery
 import aiosmtplib
 import asyncio
 from app.config import setting
-
-
 from app.email.simple_service import SimpleEmailReader
 from app.database import async_session_maker
 from app.tickets.models import Ticket
-# from app.neural.service import NeuralService  # твоя нейронка
+from app.answer_pdf import analyze  # Импортируем analyze
 import logging
 from datetime import datetime
-import asyncio
 
+logger = logging.getLogger(__name__)
 
-
+email_reader = SimpleEmailReader(
+    host=setting.IMAP_HOST,
+    email=setting.EMAIL_USER,
+    password=setting.EMAIL_PASSWORD
+)
 
 @celery.task
 def send_answer_email(answer: str, email_to: str):
@@ -34,19 +36,6 @@ def send_answer_email(answer: str, email_to: str):
     asyncio.run(send())
     return f"Письмо отправлено на {email_to}"
 
-
-
-
-logger = logging.getLogger(__name__)
-
-email_reader = SimpleEmailReader(
-    host=setting.IMAP_HOST,
-    email=setting.EMAIL_USER,
-    password=setting.EMAIL_PASSWORD
-)
-
-# neural_service = NeuralService()  # твоя нейронка
-
 @celery.task(name="process_new_emails")
 def process_new_emails_task():
     """
@@ -65,23 +54,31 @@ def process_new_emails_task():
             return {"processed": 0}
         
         logger.info(f"✅ Найдено {len(messages)} писем")
-        print(messages[0]['body'])
-        return
+        
         processed_count = 0
         for msg in messages:
-            # 2. Отправляем в нейронку (синхронно или асинхронно)
-            # neural_response = neural_service.analyze({
-            #     "text": msg['body'],
-            #     "subject": msg['subject'],
-            #     "from": msg['from_email']
-            # })
-            
-            # 3. Сохраняем в БД (используем async_to_sync)
-            asyncio.run(save_ticket_to_db(msg, neural_response))
-            processed_count += 1
+            try:
+                # 2. Отправляем в нейронку (синхронно вызываем асинхронную функцию)
+                neural_response = asyncio.run(analyze({
+                    "text": msg['body'],
+                    "subject": msg['subject'],
+                    "from": msg['from_email']
+                }))
+                
+                # 3. Сохраняем в БД
+                asyncio.run(save_ticket_to_db(msg, neural_response))
+                processed_count += 1
+                
+                logger.info(f"✅ Обработано письмо от {msg['from_email']}")
+                
+            except Exception as e:
+                logger.error(f"❌ Ошибка при обработке письма от {msg['from_email']}: {e}")
+                # Продолжаем обработку следующих писем
+                continue
         
         return {
             "processed": processed_count,
+            "total": len(messages),
             "status": "success"
         }
         
@@ -94,14 +91,16 @@ async def save_ticket_to_db(msg: dict, neural_response: dict):
     async with async_session_maker() as session:
         ticket = Ticket(
             email=msg['from_email'],
-            from_name=msg.get('from_name'),
-            subject=msg['subject'],
+            full_name=msg.get('from_name', ''),
             original_text=msg['body'],
             generated_response=neural_response.get('answer'),
             sentiment=neural_response.get('sentiment'),
             confidence=neural_response.get('confidence'),
             status="new",
-            created_at=datetime.utcnow()
+            received_date=datetime.utcnow(),  # Добавил received_date
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()  # Добавил updated_at
         )
         session.add(ticket)
         await session.commit()
+        logger.info(f"💾 Тикет сохранен в БД, ID: {ticket.id}")

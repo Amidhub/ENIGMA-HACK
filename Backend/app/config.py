@@ -20,7 +20,7 @@ class Setting(BaseSettings):
     ALGORITM : str
     SIGN : str
     
-    API_n : str
+    MISTRAL_API_KEY : str
 
     class Config:
         env_file = ".env"
