@@ -7,7 +7,7 @@ from app.operator.dependencise import get_current_user
 from app.tickets.dao import TickReq
 from app.email.schemas import Answer_to_email
 from app.tasks.tasks import send_answer_email
-from app.history.dao import TickHReq
+from app.history.models import TicketHistory
 from app.tasks.tasks import process_new_emails_task
 
 router = APIRouter(
@@ -18,13 +18,7 @@ router = APIRouter(
 @router.post("send_messege", status_code=status.HTTP_201_CREATED)
 async def get(data : Answer_to_email, oper = Depends(get_current_user)):
     row = await TickReq.delete_ticket(data.id)
-    if row:
-        # Берем только поля, которые есть в таблице
-        ticket_dict = {
-            column.name: getattr(row, column.name) 
-            for column in row.__table__.columns
-        }
-    await TickHReq.add_ticket(**ticket_dict)
+    #добавить в history
     send_answer_email.delay(
             answer=data.answer,
             email_to=data.email
