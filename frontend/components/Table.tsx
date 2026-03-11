@@ -2,16 +2,16 @@
 
 import checkStatus from "@/api/tickets/checkStatus";
 import updateStatus from "@/api/tickets/updateStatus";
+import useAuth from "@/hooks/useAuth";
 import { useTicketStore } from "@/store/useTicketStore";
 import CellTableProps from "@/types/CellTableProps";
 import TableProps from "@/types/TableProps";
 import { useState } from "react";
 
-export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage, sortPageDate, sortPageEmotial} : TableProps) {
+export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage, sortPageDate, sortPageEmotial, isLoading} : TableProps) {
   const { setCurrentTicket } = useTicketStore();  
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
   const [sortEmotionalСolor, setSortEmotionalСolor] = useState<'neutral' | 'positive' | 'negative'>('neutral')
-
   const handleCurrentCellEdit = (item: CellTableProps, type: 'send' | 'edit') => {
     setCurrentTicket(item);
     if (type === 'send') {
@@ -42,17 +42,17 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
   };
 
   const handleSendClick = async (item: CellTableProps) => {
-  handleCurrentCellEdit(item, 'send');
-  
-  const status = await checkStatus(item);
-  if (status?.status !== 'in_progress') {
-    const updateResult = await updateStatus(item);
-    if (updateResult?.status) {
-      console.log('Status updated');
-    }
-  }
-};
-
+    handleCurrentCellEdit(item, 'send');
+    
+    const status = await checkStatus(item);
+      if (status?.status !== 'in_progress') {
+        const updateResult = await updateStatus(item);
+        if (updateResult?.status) {
+          console.log('Status updated');
+        }
+      }
+    };
+    
   return (
     <div className="rounded-xl overflow-hidden border border-[#D5BDAF] shadow-sm pointer-events-auto">
       <table className="w-full border-collapse">
@@ -86,6 +86,16 @@ export default function Table({setShowWidgetEdit, setShowWidgetSend, currentPage
           </tr>
         </thead>
         <tbody>
+          {isLoading && (
+          <tr>
+            <td colSpan={11} className="p-8 text-center">
+              <div className="flex flex-col items-center justify-center gap-3">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D5BDAF]"></div>
+                <p className="text-xl text-[#646360] font-medium">Загрузка...</p>
+              </div>
+            </td>
+          </tr>
+        )}
           {currentPage?.tickets?.length === 0 ? (
             <tr>
               <td colSpan={11} className="p-8 text-center">

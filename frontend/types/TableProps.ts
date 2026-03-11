@@ -5,4 +5,5 @@ export default interface TableProps {
   setShowWidgetSend: React.Dispatch<React.SetStateAction<boolean>>;
   sortPageDate(sortType: string): void;
   sortPageEmotial(sortType: string): void;
+  isLoading: boolean;
 }

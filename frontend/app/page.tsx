@@ -29,7 +29,8 @@ export default function Home() {
     goPrevPage,
     goPagePressPage,
     sortPageDate,
-    sortPageEmotial
+    sortPageEmotial,
+    isLoading,
   } = usePages();
 
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function Home() {
       router.push('/login');
     }
   }, [])
-
+  
   return (
     <div className="min-h-screen flex flex-col bg-linear-to-b from-[#EDEDE9] to-[#F5EBE0]">
       <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-[#D5BDAF] shadow-sm z-10">
@@ -93,6 +94,7 @@ export default function Home() {
                 sortPageDate={sortPageDate}
                 sortPageEmotial={sortPageEmotial}
                 currentPage={currentPage}
+                isLoading={isLoading}
               />
             </div>
             

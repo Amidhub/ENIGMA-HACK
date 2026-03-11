@@ -3,19 +3,34 @@ import { useEffect, useState } from "react";
 import PageProps from "@/types/PageProps";
 
 const usePages = () => {
-  const { tickets, fetchTickets, startAutoRefresh, stopAutoRefresh } = useTicketStore(); 
+  const { tickets, fetchTickets, startAutoRefresh } = useTicketStore(); 
   const [pages, setPages] = useState<PageProps[]>([]);
-  const [countPages, setCountPages] = useState<number>(1);
+  const [countPages, setCountPages] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<PageProps | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true); 
   const ITEMS_PER_PAGE = 12;
-  const [currentPage, setCurrentPage] = useState<PageProps>(pages[0]);
   
   useEffect(() => {
     startAutoRefresh();
   }, [fetchTickets]);
 
   useEffect(() => {
+    setIsLoading(true); 
+    if (!tickets.length) {
+      setPages([]);
+      setCountPages(0);
+      setCurrentPage({
+        page: 0,
+        tickets: [],
+        startIndex: 0,
+        endIndex: 0
+      });
+      setIsLoading(false); 
+      return;
+    }
+    
     const totalPages = Math.ceil(tickets.length / ITEMS_PER_PAGE);
-    const newPages = [];
+    const newPages: PageProps[] = [];
     
     for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
       const startIndex = (pageNum - 1) * ITEMS_PER_PAGE;
@@ -33,17 +48,17 @@ const usePages = () => {
     setPages(newPages);
     setCountPages(totalPages);
     
-    if (currentPage) {
-      const updatedPage = newPages.find(p => p.page === currentPage.page);
-      if (updatedPage) {
-        setCurrentPage(updatedPage);
-      } else if (newPages.length > 0) {
-        setCurrentPage(newPages[0]); 
+    setCurrentPage(prevCurrentPage => {
+      if (prevCurrentPage) {
+        const updatedPage = newPages.find(p => p.page === prevCurrentPage.page);
+        if (updatedPage) return updatedPage;
       }
-    } else if (newPages.length > 0) {
-      setCurrentPage(newPages[0]);
-    }
+      return newPages[0] || null;
+    });
+    
+    setIsLoading(false); 
   }, [tickets]);
+
 
   const goNextPage = () => {
     if (currentPage?.page === countPages) return;
@@ -62,7 +77,7 @@ const usePages = () => {
   }
 
   const sortPageDate = (sortType: 'asc' | 'desc') => {
-    currentPage.tickets.sort((a, b) => {
+    currentPage?.tickets.sort((a, b) => {
       const dateA = new Date(a.date).getTime();
       const dateB = new Date(b.date).getTime();
       
@@ -77,7 +92,7 @@ const usePages = () => {
       negative: 3
     };
 
-    currentPage.tickets.sort((a, b) => {
+    currentPage?.tickets.sort((a, b) => {
       if (sortType === 'positive') {
         return emotionalOrder[a.emotionalСolor] - emotionalOrder[b.emotionalСolor];
       }
@@ -97,6 +112,7 @@ const usePages = () => {
     currentPage,
     pages,
     ITEMS_PER_PAGE,
+    isLoading,
     setCurrentPage,
     goNextPage,
     goPrevPage,

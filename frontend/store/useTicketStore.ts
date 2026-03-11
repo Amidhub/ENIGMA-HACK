@@ -49,8 +49,11 @@ export const useTicketStore = create<TicketStore>()(
         fetchTickets: async () => {
           set({ isLoading: true, error: null });
           try {
-            const data: TicketResponse[] = await getTickets();
-            console.log(data)
+            const data = await getTickets() as TicketResponse[] | { detail: string };
+            if ('detail' in data) {
+              set({ error: data.detail, isLoading: false });
+              return;
+            }
             const mappedData: CellTableProps[] = mapTickets(data);
             console.log(mappedData)
 
