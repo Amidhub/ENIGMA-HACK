@@ -10,7 +10,9 @@ const useAuth = () => {
   const handleAuth = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = await loginUser({login, password});
-    localStorage.setItem('user_id', data.id);
+    console.log(data);
+    
+    localStorage.setItem('user_id', data);
     router.push('/');  
   }
 

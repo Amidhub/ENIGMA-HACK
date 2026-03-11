@@ -10,9 +10,9 @@ import { useNotification } from "@/hooks/useNotification";
 import addTicketApi from "@/api/tickets/addTicketApi";
 import sendEmail from "@/api/sendEmail";
 import updateTicketApi from "@/api/tickets/updateTicketApi";
+import checkStatus from "@/api/tickets/checkStatus";
 import updateStatus from "@/api/tickets/updateStatus";
 import mapToApiTicket from "@/utils/mapTIcketsResponse";
-import checkStatus from "@/api/tickets/checkStatus";
 
 interface ModalProps {
   showWidgetCreate: boolean;
@@ -43,8 +43,11 @@ const Modal = ({
   const contentClass = "bg-[#F5EBE0] border border-[#D5BDAF] rounded-2xl shadow-xl min-w-75 max-w-125 w-[90%] max-h-[90vh] overflow-y-auto text-[#1A1A1A]";
 
   const handleCreateTicket = async (item: CellTableProps) => {
-    const data = await addTicketApi(item);
-
+    const data = await addTicketApi(mapToApiTicket(item));
+    if (!data.success) {
+      addNotification('error', data.msg)
+      return null;
+    }
     const nextId = tickets.length > 0 ? Math.max(...tickets.map(t => t.id as number)) + 1 : 1;
     addTicket({ ...item, id: nextId });
     setShowWidgetCreate(false);
@@ -64,7 +67,12 @@ const Modal = ({
   }
 
   const handleUpdateTicket = async (ticket: CellTableProps) => {
-    const data = await updateTicketApi(mapToApiTicket(ticket));
+    const updateStatusTicket = await updateStatus(ticket);
+    if (!updateStatusTicket.success) {
+      addNotification('error', 'Произошла ошибка');
+      return null;
+    }
+    const data = await updateTicketApi(ticket);
     if (!data.success) {
       addNotification('error', data.msg)
       return null;

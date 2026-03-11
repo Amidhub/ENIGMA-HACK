@@ -10,5 +10,4 @@ export default interface CellTableProps {
   emotionalСolor: 'positive' | 'negative' | 'neutral';
   essenceMatter: string;
   llmAnswer: string;
-  status?: 'in_progress' | 'new';
 }

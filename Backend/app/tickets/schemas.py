@@ -6,6 +6,7 @@ from pydantic import BaseModel, EmailStr
 
 class TicketResponse(BaseModel):
     id: int
+    full_name: str
     created_at : datetime
     company_object : str | None
     phone : str | None

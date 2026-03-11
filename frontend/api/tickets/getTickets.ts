@@ -1,6 +1,7 @@
 const getTickets = async () => {
-  const response = await fetch(`http://localhost:8000/tickets?status=new`, {
-    method: 'GET'
+  const response = await fetch(`http://localhost:7777/tickets?status=new`, {
+    method: 'GET',
+    credentials: 'include',
   });
   
   return await response.json();

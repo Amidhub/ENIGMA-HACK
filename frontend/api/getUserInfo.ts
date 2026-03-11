@@ -1,10 +1,12 @@
 const getUserInfo = async (userId: number) => {
-  const response = await fetch(`http://localhost:8000/auth/user/${userId}`, {
-    method: 'POST',
+  console.log(typeof userId);
+  
+  const response = await fetch(`http://localhost:7777/auth/user/${userId}`, {
+    method: 'GET',
     credentials: 'include',
   })
   
   return await response.json();
 }
 
-export default getUserInfo;
+export default getUserInfo; 

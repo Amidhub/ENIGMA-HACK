@@ -1,12 +1,9 @@
 import UserAuthProps from "../types/UserAuthProps";
 
-const loginUser = async ({login, password }: UserAuthProps) => {
-  console.log(login, password);
-  
-  const response = await fetch(`http://localhost:8000/auth/login`, {
+const loginUser = async ({login, password}: UserAuthProps) => {  
+  const response = await fetch(`http://localhost:7777/auth/login`, {
     method: 'POST',
     headers:{'Content-Type': 'application/json'},
-    credentials: 'include',
     body: JSON.stringify({login, password})
   })
   
