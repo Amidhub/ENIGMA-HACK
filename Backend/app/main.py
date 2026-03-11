@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 import time
 from typing import AsyncIterator
+from app.admin.views import OperatorAdmin, TicketAdmin
+from app.database import engine
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -12,6 +14,8 @@ from app.tickets.router import router as router_tickets
 from app.email.router import router as router_email
 from app.operator.router import router as router_oper
 from fastapi.middleware.cors import CORSMiddleware
+
+from sqladmin import Admin
 
 import sys
 from pathlib import Path
@@ -57,3 +61,8 @@ app.include_router(router_email)
 app.include_router(router_oper)
 
 
+admin = Admin(app=app, engine=engine)
+
+
+admin.add_view(OperatorAdmin)
+admin.add_view(TicketAdmin)
