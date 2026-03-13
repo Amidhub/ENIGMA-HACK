@@ -23,6 +23,7 @@ class Setting(BaseSettings):
     MISTRAL_API_KEY : str
 
     class Config:
-        env_file = ".env"
+        env_file = ".env-non-dev"
+        extra = "ignore"
         
 setting = Setting()

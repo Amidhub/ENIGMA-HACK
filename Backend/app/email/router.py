@@ -24,7 +24,7 @@ async def get(data : Answer_to_email, oper = Depends(get_current_user)):
             column.name: getattr(row, column.name) 
             for column in row.__table__.columns
         }
-    await TickHReq.add_ticket(**ticket_dict)
+        await TickHReq.add_ticket(**ticket_dict)
     send_answer_email.delay(
             answer=data.answer,
             email_to=data.email
